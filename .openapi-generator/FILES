@@ -1,0 +1,13 @@
+README.md
+src/main/java/com/example/gen_code_ai/dto/Response.java
+src/main/java/com/example/gen_code_ai/dto/Student.java
+src/main/java/com/example/gen_code_ai/web/ApiUtil.java
+src/main/java/com/example/gen_code_ai/web/StudentsApi.java
+src/main/java/com/example/gen_code_ai/web/StudentsApiController.java
+src/main/java/com/example/gen_code_ai/web/StudentsApiDelegate.java
+src/main/java/org/openapitools/OpenApiGeneratorApplication.java
+src/main/java/org/openapitools/RFC3339DateFormat.java
+src/main/java/org/openapitools/configuration/HomeController.java
+src/main/java/org/openapitools/configuration/SpringDocConfiguration.java
+src/main/resources/openapi.yaml
+src/test/java/org/openapitools/OpenApiGeneratorApplicationTests.java
