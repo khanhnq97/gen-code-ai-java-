@@ -1,0 +1,1013 @@
+openapi: 3.0.3
+info:
+  title: Movie API
+  version: 1.0.0
+servers:
+  - url: https://localhost:8080/api/v1
+tags:
+  - name: Movies
+    description: Operations about movies
+paths:
+  /movies:
+    get:
+      tags:
+        - Movies
+      summary: List all movies
+      operationId: getMovies
+      description: Generates a list of all movies
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movie'
+    post:
+      summary: Create a new movie
+      tags:
+        - Movies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movie'
+      responses:
+        '201':
+          description: Created
+  /movies/{id}:
+    get:
+      summary: Get details of a specific movie
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '404':
+          $ref: '#/components/responses/MovieNotFound'
+      tags:
+        - Movies
+
+    put:
+      summary: Update details of a specific movie
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movie'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '404':
+          $ref: '#/components/responses/MovieNotFound'
+        '409':
+          $ref: '#/components/responses/MovieAlreadyExists'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      tags:
+        - Movies
+
+    delete:
+      summary: Delete a specific movie
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '404':
+          $ref: '#/components/responses/MovieNotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      tags:
+        - Movies
+  /showtimes:
+    get:
+      summary: List all showtimes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Showtime'
+      tags:
+        - Showtimes
+    post:
+      summary: Create a new showtime
+      tags:
+        - Showtimes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Showtime'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Showtime'
+  /showtimes/{id}:
+    get:
+      summary: Get details of a specific showtime
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Showtime'
+        '404':
+          $ref: '#/components/responses/ShowtimeNotFound'
+      tags:
+        - Showtimes
+
+    put:
+      summary: Update details of a specific showtime
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Showtime'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Showtime'
+        '404':
+          $ref: '#/components/responses/ShowtimeNotFound'
+        '409':
+          $ref: '#/components/responses/ShowtimeAlreadyExists'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      tags:
+        - Showtimes
+
+    delete:
+      summary: Delete a specific showtime
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '404':
+          $ref: '#/components/responses/ShowtimeNotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      tags:
+        - Showtimes
+  /bookings:
+    get:
+      summary: List all bookings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Booking'
+      tags:
+        - Bookings
+    post:
+      summary: Create a new booking
+      tags:
+        - Bookings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+  /bookings/{id}:
+    get:
+      summary: Get details of a specific booking
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        '404':
+          $ref: '#/components/responses/BookingNotFound'
+      tags:
+        - Bookings
+
+    put:
+      summary: Update details of a specific booking (e.g., add/remove tickets)
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Booking'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+        '404':
+          $ref: '#/components/responses/BookingNotFound'
+        '409':
+          $ref: '#/components/responses/BookingAlreadyExists'
+        '422':
+          $ref: '#/components/responses/InsufficientTicketsAvailable'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      tags:
+        - Bookings
+
+    delete:
+      summary: Cancel a booking
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '404':
+          $ref: '#/components/responses/BookingNotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      tags:
+        - Bookings
+  /customers:
+    get:
+      summary: List all customers
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+      tags:
+        - Customers
+    post:
+      summary: Register a new customer
+      tags:
+        - Customers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+  /customers/{id}:
+    get:
+      summary: Get details of a specific customer
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '404':
+          $ref: '#/components/responses/CustomerNotFound'
+      tags:
+        - Customers
+
+    put:
+      summary: Update details of a specific customer
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '404':
+          $ref: '#/components/responses/CustomerNotFound'
+        '409':
+          $ref: '#/components/responses/CustomerAlreadyExists'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      tags:
+        - Customers
+
+    delete:
+      summary: Delete a customer account (only admin users can perform this action)
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '404':
+          $ref: '#/components/responses/CustomerNotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      tags:
+        - Customers
+  /employees:
+    get:
+      summary: List all employees
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+      tags:
+        - Employees
+    post:
+      summary: Add a new employee
+      tags:
+        - Employees
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+  /employees/{id}:
+    get:
+      summary: Get details of a specific employee
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '404':
+          $ref: '#/components/responses/EmployeeNotFound'
+      tags:
+        - Employees
+
+    put:
+      summary: Update details of a specific employee
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '404':
+          $ref: '#/components/responses/EmployeeNotFound'
+        '409':
+          $ref: '#/components/responses/EmployeeAlreadyExists'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      tags:
+        - Employees
+
+    delete:
+      summary: Delete an employee (only admin users can perform this action)
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+        '404':
+          $ref: '#/components/responses/EmployeeNotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      tags:
+        - Employees
+  /promotions:
+    get:
+      summary: List all promotions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Promotion'
+      tags:
+        - Promotions
+    post:
+      summary: Create a new promotion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Promotion'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Promotion'
+      tags:
+        - Promotions
+  /promotions/{id}:
+    get:
+      summary: Get details of a specific promotion
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Promotion'
+        '404':
+          description: Not Found
+      tags:
+        - Promotions
+    put:
+      summary: Update an existing promotion
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Promotion'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Promotion'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+      tags:
+        - Promotions
+    delete:
+      summary: Delete a promotion
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+      tags:
+        - Promotions
+  /reports/revenue:
+    get:
+      summary: Get revenue report
+      description: Generates a report summarizing revenue data
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalRevenue:
+                    type: number
+                    description: Total revenue generated
+                  revenueByMovie:
+                    type: object
+                    description: Revenue breakdown by movie
+                    additionalProperties:
+                      type: number
+                      description: Revenue for a specific movie
+      tags:
+        - Reports
+  /reports/attendance:
+    get:
+      summary: Get movie attendance report
+      description: Generates a report summarizing movie attendance data
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalAttendance:
+                    type: number
+                    description: Total number of movie attendees
+                  attendanceByMovie:
+                    type: object
+                    description: Attendance breakdown by movie
+                    additionalProperties:
+                      type: number
+                      description: Attendance for a specific movie
+      tags:
+        - Reports
+  /reports/popular-movies:
+    get:
+      summary: Get list of popular movies
+      description: Generates a list of the most popular movies based on attendance
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PopularMovie'
+      tags:
+        - Reports
+
+components:
+  schemas:
+    Movie:
+      type: object
+      properties:
+        movieId:
+          type: integer
+          format: int64
+          description: Unique identifier for the movie
+        title:
+          type: string
+          description: Title of the movie
+        description:
+          type: string
+          description: Description of the movie
+        duration:
+          type: integer
+          format: int32
+          description: Duration of the movie in minutes
+        releaseDate:
+          type: string
+          format: date-time
+          description: Release date of the movie
+        genre:
+          type: string
+          description: Genre of the movie
+        director:
+          type: string
+          description: Director of the movie
+        cast:
+          type: string
+          description: List of actors in the movie
+
+    Showtime:
+      type: object
+      properties:
+        showtimeId:
+          type: integer
+          format: int64
+          description: Unique identifier for the showtime
+        movieId:
+          type: integer
+          format: int64
+          description: ID of the movie being shown
+        theaterId:
+          type: integer
+          format: int64
+          description: ID of the theater where the showtime is taking place
+        startTime:
+          type: string
+          format: date-time
+          description: Start time of the showtime
+        endTime:
+          type: string
+          format: date-time
+          description: End time of the showtime
+        price:
+          type: number
+          format: double
+          description: Ticket price for the showtime
+    Booking:
+      type: object
+      properties:
+        bookingId:
+          type: integer
+          format: int64
+          description: Unique identifier for the booking
+        customerId:
+          type: integer
+          format: int64
+          description: ID of the customer who made the booking
+        showtimeId:
+          type: integer
+          format: int64
+          description: ID of the showtime associated with the booking
+        bookingDate:
+          type: string
+          format: date-time
+          description: Date and time the booking was made
+        totalAmount:
+          type: number
+          format: double
+          description: Total amount paid for the booking
+
+    Customer:
+      type: object
+      properties:
+        customerId:
+          type: integer
+          format: int64
+          description: Unique identifier for the customer
+        name:
+          type: string
+          description: Customer's full name
+        email:
+          type: string
+          format: email
+          description: Customer's email address
+        phone:
+          type: string
+          description: Customer's phone number
+        password:
+          type: string
+          format: password
+          description: Customer's password (should be encrypted)
+        membershipStatus:
+          type: string
+          enum:
+            - Basic
+            - Premium
+          description: Customer's membership status
+
+    Employee:
+      type: object
+      properties:
+        employeeId:
+          type: integer
+          format: int64
+          description: Unique identifier for the employee
+        name:
+          type: string
+          description: Employee's full name
+        email:
+          type: string
+          format: email
+          description: Employee's email address
+        phone:
+          type: string
+          description: Employee's phone number
+        position:
+          type: string
+          description: Employee's job position
+        password:
+          type: string
+          format: password
+          description: Employee's password (should be encrypted)
+
+    Promotion:
+      type: object
+      properties:
+        promotionId:
+          type: integer
+          description: Unique identifier for the promotion
+          example: 1
+        name:
+          type: string
+          description: Name of the promotion
+          example: "Summer Sale"
+        description:
+          type: string
+          description: Description of the promotion
+          example: "Get 20% off all items!"
+        discountPercent:
+          type: number
+          description: Discount percentage offered by the promotion (0-1)
+          example: 0.2
+        startDate:
+          type: string
+          format: date-time
+          description: Start date of the promotion (ISO 8601 format)
+          example: "2024-07-15T00:00:00Z"
+        endDate:
+          type: string
+          format: date-time
+          description: End date of the promotion (ISO 8601 format)
+          example: "2024-08-31T23:59:59Z"
+      required:
+        - promotionId
+        - name
+        - description
+        - discountPercent
+        - startDate
+        - endDate
+
+    PopularMovie:
+      type: object
+      properties:
+        movieId:
+          type: integer
+          description: Unique identifier for the movie
+        movieTitle:
+          type: string
+          description: Title of the movie
+        attendanceCount:
+          type: number
+          description: Total attendance for the movie
+  responses:
+    MovieNotFound:
+      description: The specified movie was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Error message indicating movie not found
+
+    MovieAlreadyExists:
+      description: A movie with the same ID already exists
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Error message indicating duplicate movie ID
+
+    InternalServerError:
+      description: An internal server error occurred
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Generic error message
+
+    MovieCreated:
+      description: Movie created successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Success message indicating movie creation
+              movie:
+                $ref: '#/components/schemas/Movie'
+    ShowtimeNotFound:
+      description: The specified showtime was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Error message indicating showtime not found
+
+    ShowtimeAlreadyExists:
+      description: A showtime with the same ID already exists
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Error message indicating duplicate showtime ID
+    BookingNotFound:
+      description: The specified booking was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Error message indicating booking not found
+
+    BookingAlreadyExists:
+      description: A booking with the same ID already exists
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Error message indicating duplicate booking ID
+
+    InsufficientTicketsAvailable:
+      description: There are not enough tickets available for the requested showtime
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Error message indicating insufficient tickets
+    CustomerNotFound:
+      description: The specified customer was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Error message indicating customer not found
+
+    CustomerAlreadyExists:
+      description: A customer with the same email already exists
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Error message indicating duplicate customer email
+
+    InvalidPassword:
+      description: The provided password is invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Error message indicating invalid password
+    EmployeeNotFound:
+      description: The specified employee was not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Error message indicating employee not found
+
+    EmployeeAlreadyExists:
+      description: An employee with the same email already exists
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Error message indicating duplicate employee email
