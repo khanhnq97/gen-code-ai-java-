@@ -8,7 +8,7 @@ package com.example.gen_code_ai.web;
 import com.example.gen_code_ai.dto.Employee;
 import com.example.gen_code_ai.dto.EmployeesIdGet404Response;
 import com.example.gen_code_ai.dto.EmployeesIdPut409Response;
-import com.example.gen_code_ai.dto.MoviesIdPut500Response;
+import com.example.gen_code_ai.dto.UpdateMovie500Response;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-15T11:36:25.960018+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T09:23:28.630196+07:00[Asia/Ho_Chi_Minh]")
 @Validated
 @Tag(name = "Employees", description = "the Employees API")
 public interface EmployeesApi {
@@ -99,7 +99,7 @@ public interface EmployeesApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = EmployeesIdGet404Response.class))
             }),
             @ApiResponse(responseCode = "500", description = "An internal server error occurred", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = MoviesIdPut500Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateMovie500Response.class))
             })
         }
     )
@@ -183,7 +183,7 @@ public interface EmployeesApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = EmployeesIdPut409Response.class))
             }),
             @ApiResponse(responseCode = "500", description = "An internal server error occurred", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = MoviesIdPut500Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateMovie500Response.class))
             })
         }
     )

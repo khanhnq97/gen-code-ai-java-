@@ -16,26 +16,26 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * BookingsIdGet404Response
+ * UpdateMovie409Response
  */
 
-@JsonTypeName("_bookings__id__get_404_response")
+@JsonTypeName("updateMovie_409_response")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T09:23:28.630196+07:00[Asia/Ho_Chi_Minh]")
-public class BookingsIdGet404Response {
+public class UpdateMovie409Response {
 
   private String message;
 
-  public BookingsIdGet404Response message(String message) {
+  public UpdateMovie409Response message(String message) {
     this.message = message;
     return this;
   }
 
   /**
-   * Error message indicating booking not found
+   * Error message indicating duplicate movie ID
    * @return message
   */
   
-  @Schema(name = "message", description = "Error message indicating booking not found", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "message", description = "Error message indicating duplicate movie ID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("message")
   public String getMessage() {
     return message;
@@ -53,8 +53,8 @@ public class BookingsIdGet404Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BookingsIdGet404Response bookingsIdGet404Response = (BookingsIdGet404Response) o;
-    return Objects.equals(this.message, bookingsIdGet404Response.message);
+    UpdateMovie409Response updateMovie409Response = (UpdateMovie409Response) o;
+    return Objects.equals(this.message, updateMovie409Response.message);
   }
 
   @Override
@@ -65,7 +65,7 @@ public class BookingsIdGet404Response {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BookingsIdGet404Response {\n");
+    sb.append("class UpdateMovie409Response {\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("}");
     return sb.toString();

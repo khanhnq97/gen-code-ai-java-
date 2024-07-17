@@ -17,13 +17,11 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Movie
+ * MovieRequest
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T09:23:28.630196+07:00[Asia/Ho_Chi_Minh]")
-public class Movie {
-
-  private String movieId;
+public class MovieRequest {
 
   private String title;
 
@@ -40,27 +38,7 @@ public class Movie {
 
   private String cast;
 
-  public Movie movieId(String movieId) {
-    this.movieId = movieId;
-    return this;
-  }
-
-  /**
-   * Unique identifier for the movie
-   * @return movieId
-  */
-  
-  @Schema(name = "movieId", description = "Unique identifier for the movie", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("movieId")
-  public String getMovieId() {
-    return movieId;
-  }
-
-  public void setMovieId(String movieId) {
-    this.movieId = movieId;
-  }
-
-  public Movie title(String title) {
+  public MovieRequest title(String title) {
     this.title = title;
     return this;
   }
@@ -80,7 +58,7 @@ public class Movie {
     this.title = title;
   }
 
-  public Movie description(String description) {
+  public MovieRequest description(String description) {
     this.description = description;
     return this;
   }
@@ -100,7 +78,7 @@ public class Movie {
     this.description = description;
   }
 
-  public Movie duration(Integer duration) {
+  public MovieRequest duration(Integer duration) {
     this.duration = duration;
     return this;
   }
@@ -120,7 +98,7 @@ public class Movie {
     this.duration = duration;
   }
 
-  public Movie releaseDate(OffsetDateTime releaseDate) {
+  public MovieRequest releaseDate(OffsetDateTime releaseDate) {
     this.releaseDate = releaseDate;
     return this;
   }
@@ -140,7 +118,7 @@ public class Movie {
     this.releaseDate = releaseDate;
   }
 
-  public Movie genre(String genre) {
+  public MovieRequest genre(String genre) {
     this.genre = genre;
     return this;
   }
@@ -160,7 +138,7 @@ public class Movie {
     this.genre = genre;
   }
 
-  public Movie director(String director) {
+  public MovieRequest director(String director) {
     this.director = director;
     return this;
   }
@@ -180,7 +158,7 @@ public class Movie {
     this.director = director;
   }
 
-  public Movie cast(String cast) {
+  public MovieRequest cast(String cast) {
     this.cast = cast;
     return this;
   }
@@ -208,27 +186,25 @@ public class Movie {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Movie movie = (Movie) o;
-    return Objects.equals(this.movieId, movie.movieId) &&
-        Objects.equals(this.title, movie.title) &&
-        Objects.equals(this.description, movie.description) &&
-        Objects.equals(this.duration, movie.duration) &&
-        Objects.equals(this.releaseDate, movie.releaseDate) &&
-        Objects.equals(this.genre, movie.genre) &&
-        Objects.equals(this.director, movie.director) &&
-        Objects.equals(this.cast, movie.cast);
+    MovieRequest movieRequest = (MovieRequest) o;
+    return Objects.equals(this.title, movieRequest.title) &&
+        Objects.equals(this.description, movieRequest.description) &&
+        Objects.equals(this.duration, movieRequest.duration) &&
+        Objects.equals(this.releaseDate, movieRequest.releaseDate) &&
+        Objects.equals(this.genre, movieRequest.genre) &&
+        Objects.equals(this.director, movieRequest.director) &&
+        Objects.equals(this.cast, movieRequest.cast);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(movieId, title, description, duration, releaseDate, genre, director, cast);
+    return Objects.hash(title, description, duration, releaseDate, genre, director, cast);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Movie {\n");
-    sb.append("    movieId: ").append(toIndentedString(movieId)).append("\n");
+    sb.append("class MovieRequest {\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    duration: ").append(toIndentedString(duration)).append("\n");

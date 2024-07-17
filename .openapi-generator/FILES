@@ -10,9 +10,7 @@ src/main/java/com/example/gen_code_ai/dto/Employee.java
 src/main/java/com/example/gen_code_ai/dto/EmployeesIdGet404Response.java
 src/main/java/com/example/gen_code_ai/dto/EmployeesIdPut409Response.java
 src/main/java/com/example/gen_code_ai/dto/Movie.java
-src/main/java/com/example/gen_code_ai/dto/MoviesIdGet404Response.java
-src/main/java/com/example/gen_code_ai/dto/MoviesIdPut409Response.java
-src/main/java/com/example/gen_code_ai/dto/MoviesIdPut500Response.java
+src/main/java/com/example/gen_code_ai/dto/MovieRequest.java
 src/main/java/com/example/gen_code_ai/dto/PopularMovie.java
 src/main/java/com/example/gen_code_ai/dto/Promotion.java
 src/main/java/com/example/gen_code_ai/dto/ReportsAttendanceGet200Response.java
@@ -20,6 +18,9 @@ src/main/java/com/example/gen_code_ai/dto/ReportsRevenueGet200Response.java
 src/main/java/com/example/gen_code_ai/dto/Showtime.java
 src/main/java/com/example/gen_code_ai/dto/ShowtimesIdGet404Response.java
 src/main/java/com/example/gen_code_ai/dto/ShowtimesIdPut409Response.java
+src/main/java/com/example/gen_code_ai/dto/UpdateMovie404Response.java
+src/main/java/com/example/gen_code_ai/dto/UpdateMovie409Response.java
+src/main/java/com/example/gen_code_ai/dto/UpdateMovie500Response.java
 src/main/java/com/example/gen_code_ai/web/ApiUtil.java
 src/main/java/com/example/gen_code_ai/web/BookingsApi.java
 src/main/java/com/example/gen_code_ai/web/CustomersApi.java

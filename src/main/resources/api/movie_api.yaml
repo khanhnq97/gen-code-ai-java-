@@ -26,6 +26,7 @@ paths:
                   $ref: '#/components/schemas/Movie'
     post:
       summary: Create a new movie
+      operationId: createMovie
       tags:
         - Movies
       requestBody:
@@ -33,41 +34,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Movie'
+              $ref: '#/components/schemas/MovieRequest'
       responses:
         '201':
           description: Created
-  /movies/{id}:
-    get:
-      summary: Get details of a specific movie
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Movie'
-        '404':
-          $ref: '#/components/responses/MovieNotFound'
+    put:
       tags:
         - Movies
-
-    put:
       summary: Update details of a specific movie
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            format: int64
+      operationId: updateMovie
       requestBody:
         required: true
         content:
@@ -87,18 +66,38 @@ paths:
           $ref: '#/components/responses/MovieAlreadyExists'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /movies/{id}:
+    get:
       tags:
         - Movies
-
-    delete:
-      summary: Delete a specific movie
+      summary: Get details of a specific movie
+      operationId: getMovieById
       parameters:
         - in: path
           name: id
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '404':
+          $ref: '#/components/responses/MovieNotFound'
+    delete:
+      tags:
+        - Movies
+      summary: Delete a specific movie
+      operationId: deleteMovie
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
       responses:
         '204':
           description: No Content
@@ -106,8 +105,6 @@ paths:
           $ref: '#/components/responses/MovieNotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-      tags:
-        - Movies
   /showtimes:
     get:
       summary: List all showtimes
@@ -679,8 +676,7 @@ components:
       type: object
       properties:
         movieId:
-          type: integer
-          format: int64
+          type: string
           description: Unique identifier for the movie
         title:
           type: string
@@ -705,7 +701,32 @@ components:
         cast:
           type: string
           description: List of actors in the movie
-
+    MovieRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the movie
+        description:
+          type: string
+          description: Description of the movie
+        duration:
+          type: integer
+          format: int32
+          description: Duration of the movie in minutes
+        releaseDate:
+          type: string
+          format: date-time
+          description: Release date of the movie
+        genre:
+          type: string
+          description: Genre of the movie
+        director:
+          type: string
+          description: Director of the movie
+        cast:
+          type: string
+          description: List of actors in the movie
     Showtime:
       type: object
       properties:
