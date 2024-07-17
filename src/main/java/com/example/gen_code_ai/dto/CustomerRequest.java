@@ -16,13 +16,13 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * Customer
+ * CustomerRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T09:48:33.846936+07:00[Asia/Ho_Chi_Minh]")
-public class Customer {
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T10:31:45.710274+07:00[Asia/Ho_Chi_Minh]")
+public class CustomerRequest {
 
-  private Long customerId;
+  private String customerId;
 
   private String name;
 
@@ -69,7 +69,7 @@ public class Customer {
 
   private MembershipStatusEnum membershipStatus;
 
-  public Customer customerId(Long customerId) {
+  public CustomerRequest customerId(String customerId) {
     this.customerId = customerId;
     return this;
   }
@@ -81,15 +81,15 @@ public class Customer {
   
   @Schema(name = "customerId", description = "Unique identifier for the customer", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("customerId")
-  public Long getCustomerId() {
+  public String getCustomerId() {
     return customerId;
   }
 
-  public void setCustomerId(Long customerId) {
+  public void setCustomerId(String customerId) {
     this.customerId = customerId;
   }
 
-  public Customer name(String name) {
+  public CustomerRequest name(String name) {
     this.name = name;
     return this;
   }
@@ -109,7 +109,7 @@ public class Customer {
     this.name = name;
   }
 
-  public Customer email(String email) {
+  public CustomerRequest email(String email) {
     this.email = email;
     return this;
   }
@@ -129,7 +129,7 @@ public class Customer {
     this.email = email;
   }
 
-  public Customer phone(String phone) {
+  public CustomerRequest phone(String phone) {
     this.phone = phone;
     return this;
   }
@@ -149,7 +149,7 @@ public class Customer {
     this.phone = phone;
   }
 
-  public Customer password(String password) {
+  public CustomerRequest password(String password) {
     this.password = password;
     return this;
   }
@@ -169,7 +169,7 @@ public class Customer {
     this.password = password;
   }
 
-  public Customer membershipStatus(MembershipStatusEnum membershipStatus) {
+  public CustomerRequest membershipStatus(MembershipStatusEnum membershipStatus) {
     this.membershipStatus = membershipStatus;
     return this;
   }
@@ -197,13 +197,13 @@ public class Customer {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Customer customer = (Customer) o;
-    return Objects.equals(this.customerId, customer.customerId) &&
-        Objects.equals(this.name, customer.name) &&
-        Objects.equals(this.email, customer.email) &&
-        Objects.equals(this.phone, customer.phone) &&
-        Objects.equals(this.password, customer.password) &&
-        Objects.equals(this.membershipStatus, customer.membershipStatus);
+    CustomerRequest customerRequest = (CustomerRequest) o;
+    return Objects.equals(this.customerId, customerRequest.customerId) &&
+        Objects.equals(this.name, customerRequest.name) &&
+        Objects.equals(this.email, customerRequest.email) &&
+        Objects.equals(this.phone, customerRequest.phone) &&
+        Objects.equals(this.password, customerRequest.password) &&
+        Objects.equals(this.membershipStatus, customerRequest.membershipStatus);
   }
 
   @Override
@@ -214,7 +214,7 @@ public class Customer {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Customer {\n");
+    sb.append("class CustomerRequest {\n");
     sb.append("    customerId: ").append(toIndentedString(customerId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");

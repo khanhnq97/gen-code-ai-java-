@@ -16,26 +16,26 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * UpdateMovie409Response
+ * UpdateCustomer404Response
  */
 
-@JsonTypeName("updateMovie_409_response")
+@JsonTypeName("updateCustomer_404_response")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T10:31:45.710274+07:00[Asia/Ho_Chi_Minh]")
-public class UpdateMovie409Response {
+public class UpdateCustomer404Response {
 
   private String message;
 
-  public UpdateMovie409Response message(String message) {
+  public UpdateCustomer404Response message(String message) {
     this.message = message;
     return this;
   }
 
   /**
-   * Error message indicating duplicate movie ID
+   * Error message indicating customer not found
    * @return message
   */
   
-  @Schema(name = "message", description = "Error message indicating duplicate movie ID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "message", description = "Error message indicating customer not found", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("message")
   public String getMessage() {
     return message;
@@ -53,8 +53,8 @@ public class UpdateMovie409Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UpdateMovie409Response updateMovie409Response = (UpdateMovie409Response) o;
-    return Objects.equals(this.message, updateMovie409Response.message);
+    UpdateCustomer404Response updateCustomer404Response = (UpdateCustomer404Response) o;
+    return Objects.equals(this.message, updateCustomer404Response.message);
   }
 
   @Override
@@ -65,7 +65,7 @@ public class UpdateMovie409Response {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UpdateMovie409Response {\n");
+    sb.append("class UpdateCustomer404Response {\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("}");
     return sb.toString();

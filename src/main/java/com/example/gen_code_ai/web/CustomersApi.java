@@ -5,9 +5,10 @@
  */
 package com.example.gen_code_ai.web;
 
-import com.example.gen_code_ai.dto.Customer;
-import com.example.gen_code_ai.dto.CustomersIdGet404Response;
-import com.example.gen_code_ai.dto.CustomersIdPut409Response;
+import com.example.gen_code_ai.dto.CustomerRequest;
+import com.example.gen_code_ai.dto.CustomerResponse;
+import com.example.gen_code_ai.dto.UpdateCustomer404Response;
+import com.example.gen_code_ai.dto.UpdateCustomer409Response;
 import com.example.gen_code_ai.dto.UpdateMovie500Response;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T09:23:28.630196+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T10:31:45.710274+07:00[Asia/Ho_Chi_Minh]")
 @Validated
 @Tag(name = "Customers", description = "the Customers API")
 public interface CustomersApi {
@@ -45,32 +46,34 @@ public interface CustomersApi {
     }
 
     /**
-     * GET /customers : List all customers
+     * POST /customers : Register a new customer
      *
-     * @return OK (status code 200)
+     * @param customerRequest  (required)
+     * @return Created (status code 201)
      */
     @Operation(
-        operationId = "customersGet",
-        summary = "List all customers",
+        operationId = "createCustomer",
+        summary = "Register a new customer",
         tags = { "Customers" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Customer.class)))
+            @ApiResponse(responseCode = "201", description = "Created", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CustomerResponse.class))
             })
         }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
+        method = RequestMethod.POST,
         value = "/customers",
-        produces = { "application/json" }
+        produces = { "application/json" },
+        consumes = { "application/json" }
     )
-    default ResponseEntity<List<Customer>> customersGet(
-        
+    default ResponseEntity<CustomerResponse> createCustomer(
+        @Parameter(name = "CustomerRequest", description = "", required = true) @Valid @RequestBody CustomerRequest customerRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 0, \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }, { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 0, \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" } ]";
+                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : \"customerId\", \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -90,13 +93,13 @@ public interface CustomersApi {
      *         or An internal server error occurred (status code 500)
      */
     @Operation(
-        operationId = "customersIdDelete",
+        operationId = "deleteCustomer",
         summary = "Delete a customer account (only admin users can perform this action)",
         tags = { "Customers" },
         responses = {
             @ApiResponse(responseCode = "204", description = "No Content"),
             @ApiResponse(responseCode = "404", description = "The specified customer was not found", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = CustomersIdGet404Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateCustomer404Response.class))
             }),
             @ApiResponse(responseCode = "500", description = "An internal server error occurred", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateMovie500Response.class))
@@ -108,7 +111,7 @@ public interface CustomersApi {
         value = "/customers/{id}",
         produces = { "application/json" }
     )
-    default ResponseEntity<Void> customersIdDelete(
+    default ResponseEntity<Void> deleteCustomer(
         @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
@@ -124,15 +127,15 @@ public interface CustomersApi {
      *         or The specified customer was not found (status code 404)
      */
     @Operation(
-        operationId = "customersIdGet",
+        operationId = "getCustomerById",
         summary = "Get details of a specific customer",
         tags = { "Customers" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Customer.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CustomerResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "The specified customer was not found", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = CustomersIdGet404Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateCustomer404Response.class))
             })
         }
     )
@@ -141,13 +144,13 @@ public interface CustomersApi {
         value = "/customers/{id}",
         produces = { "application/json" }
     )
-    default ResponseEntity<Customer> customersIdGet(
+    default ResponseEntity<CustomerResponse> getCustomerById(
         @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 0, \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
+                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : \"customerId\", \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -159,28 +162,64 @@ public interface CustomersApi {
 
 
     /**
-     * PUT /customers/{id} : Update details of a specific customer
+     * GET /customers : List all customers
      *
-     * @param id  (required)
-     * @param customer  (required)
+     * @return OK (status code 200)
+     */
+    @Operation(
+        operationId = "getCustomers",
+        summary = "List all customers",
+        tags = { "Customers" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CustomerResponse.class)))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/customers",
+        produces = { "application/json" }
+    )
+    default ResponseEntity<List<CustomerResponse>> getCustomers(
+        
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "[ { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : \"customerId\", \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }, { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : \"customerId\", \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" } ]";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    /**
+     * PUT /customers : Update details of a specific customer
+     *
+     * @param customerRequest  (required)
      * @return OK (status code 200)
      *         or The specified customer was not found (status code 404)
      *         or A customer with the same email already exists (status code 409)
      *         or An internal server error occurred (status code 500)
      */
     @Operation(
-        operationId = "customersIdPut",
+        operationId = "updateCustomer",
         summary = "Update details of a specific customer",
         tags = { "Customers" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Customer.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CustomerResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "The specified customer was not found", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = CustomersIdGet404Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateCustomer404Response.class))
             }),
             @ApiResponse(responseCode = "409", description = "A customer with the same email already exists", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = CustomersIdPut409Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateCustomer409Response.class))
             }),
             @ApiResponse(responseCode = "500", description = "An internal server error occurred", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateMovie500Response.class))
@@ -189,57 +228,17 @@ public interface CustomersApi {
     )
     @RequestMapping(
         method = RequestMethod.PUT,
-        value = "/customers/{id}",
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Customer> customersIdPut(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id,
-        @Parameter(name = "Customer", description = "", required = true) @Valid @RequestBody Customer customer
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 0, \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    /**
-     * POST /customers : Register a new customer
-     *
-     * @param customer  (required)
-     * @return Created (status code 201)
-     */
-    @Operation(
-        operationId = "customersPost",
-        summary = "Register a new customer",
-        tags = { "Customers" },
-        responses = {
-            @ApiResponse(responseCode = "201", description = "Created", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Customer.class))
-            })
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
         value = "/customers",
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Customer> customersPost(
-        @Parameter(name = "Customer", description = "", required = true) @Valid @RequestBody Customer customer
+    default ResponseEntity<CustomerResponse> updateCustomer(
+        @Parameter(name = "CustomerRequest", description = "", required = true) @Valid @RequestBody CustomerRequest customerRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 0, \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
+                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : \"customerId\", \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

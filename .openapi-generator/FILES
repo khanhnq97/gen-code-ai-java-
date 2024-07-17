@@ -3,9 +3,8 @@ src/main/java/com/example/gen_code_ai/dto/Booking.java
 src/main/java/com/example/gen_code_ai/dto/BookingsIdGet404Response.java
 src/main/java/com/example/gen_code_ai/dto/BookingsIdPut409Response.java
 src/main/java/com/example/gen_code_ai/dto/BookingsIdPut422Response.java
-src/main/java/com/example/gen_code_ai/dto/Customer.java
-src/main/java/com/example/gen_code_ai/dto/CustomersIdGet404Response.java
-src/main/java/com/example/gen_code_ai/dto/CustomersIdPut409Response.java
+src/main/java/com/example/gen_code_ai/dto/CustomerRequest.java
+src/main/java/com/example/gen_code_ai/dto/CustomerResponse.java
 src/main/java/com/example/gen_code_ai/dto/Employee.java
 src/main/java/com/example/gen_code_ai/dto/EmployeesIdGet404Response.java
 src/main/java/com/example/gen_code_ai/dto/EmployeesIdPut409Response.java
@@ -18,6 +17,8 @@ src/main/java/com/example/gen_code_ai/dto/ReportsRevenueGet200Response.java
 src/main/java/com/example/gen_code_ai/dto/Showtime.java
 src/main/java/com/example/gen_code_ai/dto/ShowtimesIdGet404Response.java
 src/main/java/com/example/gen_code_ai/dto/ShowtimesIdPut409Response.java
+src/main/java/com/example/gen_code_ai/dto/UpdateCustomer404Response.java
+src/main/java/com/example/gen_code_ai/dto/UpdateCustomer409Response.java
 src/main/java/com/example/gen_code_ai/dto/UpdateMovie404Response.java
 src/main/java/com/example/gen_code_ai/dto/UpdateMovie409Response.java
 src/main/java/com/example/gen_code_ai/dto/UpdateMovie500Response.java
