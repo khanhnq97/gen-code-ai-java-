@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("_bookings__id__put_409_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T10:31:45.710274+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T11:01:02.954251+07:00[Asia/Ho_Chi_Minh]")
 public class BookingsIdPut409Response {
 
   private String message;

@@ -5,9 +5,10 @@
  */
 package com.example.gen_code_ai.web;
 
-import com.example.gen_code_ai.dto.Employee;
-import com.example.gen_code_ai.dto.EmployeesIdGet404Response;
-import com.example.gen_code_ai.dto.EmployeesIdPut409Response;
+import com.example.gen_code_ai.dto.EmployeeRequest;
+import com.example.gen_code_ai.dto.EmployeeResponse;
+import com.example.gen_code_ai.dto.UpdateEmployee404Response;
+import com.example.gen_code_ai.dto.UpdateEmployee409Response;
 import com.example.gen_code_ai.dto.UpdateMovie500Response;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T10:31:45.710274+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T11:01:02.954251+07:00[Asia/Ho_Chi_Minh]")
 @Validated
 @Tag(name = "Employees", description = "the Employees API")
 public interface EmployeesApi {
@@ -45,32 +46,34 @@ public interface EmployeesApi {
     }
 
     /**
-     * GET /employees : List all employees
+     * POST /employees : Add a new employee
      *
-     * @return OK (status code 200)
+     * @param employeeRequest  (required)
+     * @return Created (status code 201)
      */
     @Operation(
-        operationId = "employeesGet",
-        summary = "List all employees",
+        operationId = "createEmployee",
+        summary = "Add a new employee",
         tags = { "Employees" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Employee.class)))
+            @ApiResponse(responseCode = "201", description = "Created", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = EmployeeResponse.class))
             })
         }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
+        method = RequestMethod.POST,
         value = "/employees",
-        produces = { "application/json" }
+        produces = { "application/json" },
+        consumes = { "application/json" }
     )
-    default ResponseEntity<List<Employee>> employeesGet(
-        
+    default ResponseEntity<EmployeeResponse> createEmployee(
+        @Parameter(name = "EmployeeRequest", description = "", required = true) @Valid @RequestBody EmployeeRequest employeeRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : 0, \"position\" : \"position\", \"email\" : \"email\" }, { \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : 0, \"position\" : \"position\", \"email\" : \"email\" } ]";
+                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : \"employeeId\", \"position\" : \"position\", \"email\" : \"email\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -96,7 +99,7 @@ public interface EmployeesApi {
         responses = {
             @ApiResponse(responseCode = "204", description = "No Content"),
             @ApiResponse(responseCode = "404", description = "The specified employee was not found", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = EmployeesIdGet404Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateEmployee404Response.class))
             }),
             @ApiResponse(responseCode = "500", description = "An internal server error occurred", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateMovie500Response.class))
@@ -124,15 +127,15 @@ public interface EmployeesApi {
      *         or The specified employee was not found (status code 404)
      */
     @Operation(
-        operationId = "employeesIdGet",
+        operationId = "getEmployeeById",
         summary = "Get details of a specific employee",
         tags = { "Employees" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Employee.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = EmployeeResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "The specified employee was not found", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = EmployeesIdGet404Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateEmployee404Response.class))
             })
         }
     )
@@ -141,13 +144,13 @@ public interface EmployeesApi {
         value = "/employees/{id}",
         produces = { "application/json" }
     )
-    default ResponseEntity<Employee> employeesIdGet(
+    default ResponseEntity<EmployeeResponse> getEmployeeById(
         @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : 0, \"position\" : \"position\", \"email\" : \"email\" }";
+                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : \"employeeId\", \"position\" : \"position\", \"email\" : \"email\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -159,28 +162,64 @@ public interface EmployeesApi {
 
 
     /**
-     * PUT /employees/{id} : Update details of a specific employee
+     * GET /employees : List all employees
      *
-     * @param id  (required)
-     * @param employee  (required)
+     * @return OK (status code 200)
+     */
+    @Operation(
+        operationId = "getEmployees",
+        summary = "List all employees",
+        tags = { "Employees" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = EmployeeResponse.class)))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/employees",
+        produces = { "application/json" }
+    )
+    default ResponseEntity<List<EmployeeResponse>> getEmployees(
+        
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "[ { \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : \"employeeId\", \"position\" : \"position\", \"email\" : \"email\" }, { \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : \"employeeId\", \"position\" : \"position\", \"email\" : \"email\" } ]";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    /**
+     * PUT /employees : Update details of a specific employee
+     *
+     * @param employeeRequest  (required)
      * @return OK (status code 200)
      *         or The specified employee was not found (status code 404)
      *         or An employee with the same email already exists (status code 409)
      *         or An internal server error occurred (status code 500)
      */
     @Operation(
-        operationId = "employeesIdPut",
+        operationId = "updateEmployee",
         summary = "Update details of a specific employee",
         tags = { "Employees" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Employee.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = EmployeeResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "The specified employee was not found", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = EmployeesIdGet404Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateEmployee404Response.class))
             }),
             @ApiResponse(responseCode = "409", description = "An employee with the same email already exists", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = EmployeesIdPut409Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateEmployee409Response.class))
             }),
             @ApiResponse(responseCode = "500", description = "An internal server error occurred", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateMovie500Response.class))
@@ -189,57 +228,17 @@ public interface EmployeesApi {
     )
     @RequestMapping(
         method = RequestMethod.PUT,
-        value = "/employees/{id}",
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Employee> employeesIdPut(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id,
-        @Parameter(name = "Employee", description = "", required = true) @Valid @RequestBody Employee employee
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : 0, \"position\" : \"position\", \"email\" : \"email\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    /**
-     * POST /employees : Add a new employee
-     *
-     * @param employee  (required)
-     * @return Created (status code 201)
-     */
-    @Operation(
-        operationId = "employeesPost",
-        summary = "Add a new employee",
-        tags = { "Employees" },
-        responses = {
-            @ApiResponse(responseCode = "201", description = "Created", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Employee.class))
-            })
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
         value = "/employees",
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Employee> employeesPost(
-        @Parameter(name = "Employee", description = "", required = true) @Valid @RequestBody Employee employee
+    default ResponseEntity<EmployeeResponse> updateEmployee(
+        @Parameter(name = "EmployeeRequest", description = "", required = true) @Valid @RequestBody EmployeeRequest employeeRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : 0, \"position\" : \"position\", \"email\" : \"email\" }";
+                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : \"employeeId\", \"position\" : \"position\", \"email\" : \"email\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

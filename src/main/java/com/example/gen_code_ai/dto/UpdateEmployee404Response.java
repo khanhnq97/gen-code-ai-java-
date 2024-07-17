@@ -16,26 +16,26 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * BookingsIdGet404Response
+ * UpdateEmployee404Response
  */
 
-@JsonTypeName("_bookings__id__get_404_response")
+@JsonTypeName("updateEmployee_404_response")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T11:01:02.954251+07:00[Asia/Ho_Chi_Minh]")
-public class BookingsIdGet404Response {
+public class UpdateEmployee404Response {
 
   private String message;
 
-  public BookingsIdGet404Response message(String message) {
+  public UpdateEmployee404Response message(String message) {
     this.message = message;
     return this;
   }
 
   /**
-   * Error message indicating booking not found
+   * Error message indicating employee not found
    * @return message
   */
   
-  @Schema(name = "message", description = "Error message indicating booking not found", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "message", description = "Error message indicating employee not found", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("message")
   public String getMessage() {
     return message;
@@ -53,8 +53,8 @@ public class BookingsIdGet404Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BookingsIdGet404Response bookingsIdGet404Response = (BookingsIdGet404Response) o;
-    return Objects.equals(this.message, bookingsIdGet404Response.message);
+    UpdateEmployee404Response updateEmployee404Response = (UpdateEmployee404Response) o;
+    return Objects.equals(this.message, updateEmployee404Response.message);
   }
 
   @Override
@@ -65,7 +65,7 @@ public class BookingsIdGet404Response {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BookingsIdGet404Response {\n");
+    sb.append("class UpdateEmployee404Response {\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("}");
     return sb.toString();

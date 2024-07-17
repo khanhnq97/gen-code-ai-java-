@@ -412,6 +412,7 @@ paths:
   /employees:
     get:
       summary: List all employees
+      operationId: getEmployees
       responses:
         '200':
           description: OK
@@ -420,11 +421,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Employee'
+                  $ref: '#/components/schemas/EmployeeResponse'
       tags:
         - Employees
     post:
       summary: Add a new employee
+      operationId: createEmployee
       tags:
         - Employees
       requestBody:
@@ -432,58 +434,30 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Employee'
+              $ref: '#/components/schemas/EmployeeRequest'
       responses:
         '201':
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Employee'
-  /employees/{id}:
-    get:
-      summary: Get details of a specific employee
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Employee'
-        '404':
-          $ref: '#/components/responses/EmployeeNotFound'
-      tags:
-        - Employees
-
+                $ref: '#/components/schemas/EmployeeResponse'
     put:
       summary: Update details of a specific employee
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            format: int64
+      operationId: updateEmployee
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Employee'
+              $ref: '#/components/schemas/EmployeeRequest'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Employee'
+                $ref: '#/components/schemas/EmployeeResponse'
         '404':
           $ref: '#/components/responses/EmployeeNotFound'
         '409':
@@ -492,7 +466,28 @@ paths:
           $ref: '#/components/responses/InternalServerError'
       tags:
         - Employees
-
+  /employees/{id}:
+    get:
+      summary: Get details of a specific employee
+      operationId: getEmployeeById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeResponse'
+        '404':
+          $ref: '#/components/responses/EmployeeNotFound'
+      tags:
+        - Employees
     delete:
       summary: Delete an employee (only admin users can perform this action)
       parameters:
@@ -826,13 +821,11 @@ components:
             - Basic
             - Premium
           description: Customer's membership status
-
-    Employee:
+    EmployeeResponse:
       type: object
       properties:
         employeeId:
-          type: integer
-          format: int64
+          type: string
           description: Unique identifier for the employee
         name:
           type: string
@@ -851,7 +844,29 @@ components:
           type: string
           format: password
           description: Employee's password (should be encrypted)
-
+    EmployeeRequest:
+      type: object
+      properties:
+        employeeId:
+          type: string
+          description: Unique identifier for the employee
+        name:
+          type: string
+          description: Employee's full name
+        email:
+          type: string
+          format: email
+          description: Employee's email address
+        phone:
+          type: string
+          description: Employee's phone number
+        position:
+          type: string
+          description: Employee's job position
+        password:
+          type: string
+          format: password
+          description: Employee's password (should be encrypted)
     Promotion:
       type: object
       properties:
