@@ -833,6 +833,9 @@ components:
           type: string
           format: password
           description: Customer's password (should be encrypted)
+        avatar:
+          type: string
+          description: Customer's avatar
         membershipStatus:
           type: string
           enum:
@@ -859,6 +862,9 @@ components:
           type: string
           format: password
           description: Customer's password (should be encrypted)
+        avatar:
+          type: string
+          description: Customer's avatar
         membershipStatus:
           type: string
           enum:

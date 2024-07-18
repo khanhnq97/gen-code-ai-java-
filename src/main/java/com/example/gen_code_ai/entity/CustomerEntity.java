@@ -13,6 +13,16 @@ public class CustomerEntity {
     private String email;
     private String phone;
     private String password;
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     private String membershipStatus;
 
     public Integer getCustomerId() {

@@ -49,7 +49,8 @@ public class CustomerService {
         customer.setName(request.getName());
         customer.setEmail(request.getEmail());
         customer.setPhone(request.getPhone());
-        customer.setPassword(passwordEncoder.encode(request.getPassword()));
+        customer.setPassword(request.getPassword());
+        customer.setAvatar(request.getAvatar());
         //todo: need update logic to get membership status
         customer.setMembershipStatus(CustomerResponse.MembershipStatusEnum.BASIC.getValue());
 
@@ -72,6 +73,7 @@ public class CustomerService {
         response.setName(customer.getName());
         response.setEmail(customer.getEmail());
         response.setPhone(customer.getPhone());
+        response.setAvatar(customer.getAvatar());
         //todo: need update logic to get membership status
         response.setMembershipStatus(CustomerResponse.MembershipStatusEnum.BASIC);
         return response;
@@ -83,7 +85,8 @@ public class CustomerService {
         customer.setName(request.getName());
         customer.setEmail(request.getEmail());
         customer.setPhone(request.getPhone());
-        customer.setPassword(passwordEncoder.encode(request.getPassword()));
+        customer.setPassword((request.getPassword()));
+        customer.setAvatar(request.getAvatar());
         //todo: need update logic to get membership status
         customer.setMembershipStatus(CustomerResponse.MembershipStatusEnum.BASIC.getValue());
         return customer;

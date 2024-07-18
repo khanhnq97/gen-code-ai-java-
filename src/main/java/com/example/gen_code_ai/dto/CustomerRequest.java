@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * CustomerRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-18T12:52:09.357085+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-19T00:56:02.813115+07:00[Asia/Ho_Chi_Minh]")
 public class CustomerRequest {
 
   private Integer customerId;
@@ -31,6 +31,8 @@ public class CustomerRequest {
   private String phone;
 
   private String password;
+
+  private String avatar;
 
   /**
    * Customer's membership status
@@ -169,6 +171,26 @@ public class CustomerRequest {
     this.password = password;
   }
 
+  public CustomerRequest avatar(String avatar) {
+    this.avatar = avatar;
+    return this;
+  }
+
+  /**
+   * Customer's avatar
+   * @return avatar
+  */
+  
+  @Schema(name = "avatar", description = "Customer's avatar", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("avatar")
+  public String getAvatar() {
+    return avatar;
+  }
+
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
+  }
+
   public CustomerRequest membershipStatus(MembershipStatusEnum membershipStatus) {
     this.membershipStatus = membershipStatus;
     return this;
@@ -203,12 +225,13 @@ public class CustomerRequest {
         Objects.equals(this.email, customerRequest.email) &&
         Objects.equals(this.phone, customerRequest.phone) &&
         Objects.equals(this.password, customerRequest.password) &&
+        Objects.equals(this.avatar, customerRequest.avatar) &&
         Objects.equals(this.membershipStatus, customerRequest.membershipStatus);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(customerId, name, email, phone, password, membershipStatus);
+    return Objects.hash(customerId, name, email, phone, password, avatar, membershipStatus);
   }
 
   @Override
@@ -220,6 +243,7 @@ public class CustomerRequest {
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    phone: ").append(toIndentedString(phone)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
+    sb.append("    avatar: ").append(toIndentedString(avatar)).append("\n");
     sb.append("    membershipStatus: ").append(toIndentedString(membershipStatus)).append("\n");
     sb.append("}");
     return sb.toString();
