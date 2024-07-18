@@ -3,7 +3,7 @@ info:
   title: Movie API
   version: 1.0.0
 servers:
-  - url: https://localhost:8080/api/v1
+  - url: http://localhost:8080/api
 tags:
   - name: Movies
     description: Operations about movies
@@ -23,7 +23,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Movie'
+                  $ref: '#/components/schemas/MovieResponse'
     post:
       summary: Create a new movie
       operationId: createMovie
@@ -41,7 +41,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Movie'
+                $ref: '#/components/schemas/MovieResponse'
     put:
       tags:
         - Movies
@@ -52,14 +52,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Movie'
+              $ref: '#/components/schemas/MovieRequest'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Movie'
+                $ref: '#/components/schemas/MovieResponse'
         '404':
           $ref: '#/components/responses/MovieNotFound'
         '409':
@@ -77,14 +77,14 @@ paths:
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Movie'
+                $ref: '#/components/schemas/MovieResponse'
         '404':
           $ref: '#/components/responses/MovieNotFound'
     delete:
@@ -97,7 +97,7 @@ paths:
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '204':
           description: No Content
@@ -105,9 +105,14 @@ paths:
           $ref: '#/components/responses/MovieNotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+
   /showtimes:
     get:
       summary: List all showtimes
+      tags:
+        - Showtimes
+      operationId: getShowtimes
+      description: Generates a list of all showtimes
       responses:
         '200':
           description: OK
@@ -116,11 +121,10 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Showtime'
-      tags:
-        - Showtimes
+                  $ref: '#/components/schemas/ShowtimeResponse'
     post:
       summary: Create a new showtime
+      operationId: createShowtime
       tags:
         - Showtimes
       requestBody:
@@ -128,58 +132,30 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Showtime'
+              $ref: '#/components/schemas/ShowtimeRequest'
       responses:
         '201':
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Showtime'
-  /showtimes/{id}:
-    get:
-      summary: Get details of a specific showtime
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Showtime'
-        '404':
-          $ref: '#/components/responses/ShowtimeNotFound'
-      tags:
-        - Showtimes
-
+                $ref: '#/components/schemas/ShowtimeResponse'
     put:
       summary: Update details of a specific showtime
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            format: int64
+      operationId: updateShowtime
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Showtime'
+              $ref: '#/components/schemas/ShowtimeRequest'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Showtime'
+                $ref: '#/components/schemas/ShowtimeResponse'
         '404':
           $ref: '#/components/responses/ShowtimeNotFound'
         '409':
@@ -188,16 +164,36 @@ paths:
           $ref: '#/components/responses/InternalServerError'
       tags:
         - Showtimes
-
-    delete:
-      summary: Delete a specific showtime
+  /showtimes/{id}:
+    get:
+      summary: Get details of a specific showtime
+      operationId: getShowtimeById
       parameters:
         - in: path
           name: id
           required: true
           schema:
             type: integer
-            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShowtimeResponse'
+        '404':
+          $ref: '#/components/responses/ShowtimeNotFound'
+      tags:
+        - Showtimes
+    delete:
+      summary: Delete a specific showtime
+      operationId: deleteShowtime
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
       responses:
         '204':
           description: No Content
@@ -207,9 +203,11 @@ paths:
           $ref: '#/components/responses/InternalServerError'
       tags:
         - Showtimes
+
   /bookings:
     get:
       summary: List all bookings
+      operationId: getBookings
       responses:
         '200':
           description: OK
@@ -218,11 +216,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Booking'
+                  $ref: '#/components/schemas/BookingResponse'
       tags:
         - Bookings
     post:
       summary: Create a new booking
+      operationId: createBooking
       tags:
         - Bookings
       requestBody:
@@ -230,58 +229,30 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Booking'
+              $ref: '#/components/schemas/BookingRequest'
       responses:
         '201':
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Booking'
-  /bookings/{id}:
-    get:
-      summary: Get details of a specific booking
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Booking'
-        '404':
-          $ref: '#/components/responses/BookingNotFound'
-      tags:
-        - Bookings
-
+                $ref: '#/components/schemas/BookingResponse'
     put:
       summary: Update details of a specific booking (e.g., add/remove tickets)
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            format: int64
+      operationId: updateBooking
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Booking'
+              $ref: '#/components/schemas/BookingRequest'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Booking'
+                $ref: '#/components/schemas/BookingResponse'
         '404':
           $ref: '#/components/responses/BookingNotFound'
         '409':
@@ -292,16 +263,36 @@ paths:
           $ref: '#/components/responses/InternalServerError'
       tags:
         - Bookings
-
-    delete:
-      summary: Cancel a booking
+  /bookings/{id}:
+    get:
+      summary: Get details of a specific booking
+      operationId: getBookingById
       parameters:
         - in: path
           name: id
           required: true
           schema:
             type: integer
-            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingResponse'
+        '404':
+          $ref: '#/components/responses/BookingNotFound'
+      tags:
+        - Bookings
+    delete:
+      summary: Cancel a booking
+      operationId: cancelBooking
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
       responses:
         '204':
           description: No Content
@@ -311,6 +302,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
       tags:
         - Bookings
+
   /customers:
     get:
       tags:
@@ -380,7 +372,6 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
       responses:
         '200':
           description: OK
@@ -401,7 +392,6 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
       responses:
         '204':
           description: No Content
@@ -409,6 +399,7 @@ paths:
           $ref: '#/components/responses/CustomerNotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+
   /employees:
     get:
       summary: List all employees
@@ -476,7 +467,6 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
       responses:
         '200':
           description: OK
@@ -490,13 +480,13 @@ paths:
         - Employees
     delete:
       summary: Delete an employee (only admin users can perform this action)
+      operationId: deleteEmployee
       parameters:
         - in: path
           name: id
           required: true
           schema:
             type: integer
-            format: int64
       responses:
         '204':
           description: No Content
@@ -663,11 +653,11 @@ paths:
 
 components:
   schemas:
-    Movie:
+    MovieRequest:
       type: object
       properties:
         movieId:
-          type: string
+          type: integer
           description: Unique identifier for the movie
         title:
           type: string
@@ -692,9 +682,12 @@ components:
         cast:
           type: string
           description: List of actors in the movie
-    MovieRequest:
+    MovieResponse:
       type: object
       properties:
+        movieId:
+          type: integer
+          description: Unique identifier for the movie
         title:
           type: string
           description: Title of the movie
@@ -718,20 +711,18 @@ components:
         cast:
           type: string
           description: List of actors in the movie
-    Showtime:
+
+    ShowtimeRequest:
       type: object
       properties:
         showtimeId:
           type: integer
-          format: int64
           description: Unique identifier for the showtime
         movieId:
           type: integer
-          format: int64
           description: ID of the movie being shown
         theaterId:
           type: integer
-          format: int64
           description: ID of the theater where the showtime is taking place
         startTime:
           type: string
@@ -745,20 +736,42 @@ components:
           type: number
           format: double
           description: Ticket price for the showtime
-    Booking:
+    ShowtimeResponse:
+      type: object
+      properties:
+        showtimeId:
+          type: integer
+          description: Unique identifier for the showtime
+        movieId:
+          type: integer
+          description: ID of the movie being shown
+        theaterId:
+          type: integer
+          description: ID of the theater where the showtime is taking place
+        startTime:
+          type: string
+          format: date-time
+          description: Start time of the showtime
+        endTime:
+          type: string
+          format: date-time
+          description: End time of the showtime
+        price:
+          type: number
+          format: double
+          description: Ticket price for the showtime
+
+    BookingRequest:
       type: object
       properties:
         bookingId:
           type: integer
-          format: int64
           description: Unique identifier for the booking
         customerId:
           type: integer
-          format: int64
           description: ID of the customer who made the booking
         showtimeId:
           type: integer
-          format: int64
           description: ID of the showtime associated with the booking
         bookingDate:
           type: string
@@ -768,12 +781,43 @@ components:
           type: number
           format: double
           description: Total amount paid for the booking
+        ticketPrice:
+          type: number
+          format: double
+          description: Ticket price for the showtime
+    BookingResponse:
+      type: object
+      properties:
+        bookingId:
+          type: integer
+          description: Unique identifier for the booking
+        customerId:
+          type: integer
+          description: ID of the customer who made the booking
+        showtimeId:
+          type: integer
+          description: ID of the showtime associated with the booking
+        bookingDate:
+          type: string
+          format: date-time
+          description: Date and time the booking was made
+        totalAmount:
+          type: number
+          format: double
+          description: Total amount paid for the booking
+        ticketPrice:
+          type: number
+          format: double
+          description: Ticket price for the showtime
+        movieId:
+          type: integer
+          description: ID of the movie being shown
 
     CustomerRequest:
       type: object
       properties:
         customerId:
-          type: string
+          type: integer
           description: Unique identifier for the customer
         name:
           type: string
@@ -799,7 +843,7 @@ components:
       type: object
       properties:
         customerId:
-          type: string
+          type: integer
           description: Unique identifier for the customer
         name:
           type: string
@@ -821,11 +865,12 @@ components:
             - Basic
             - Premium
           description: Customer's membership status
+
     EmployeeResponse:
       type: object
       properties:
         employeeId:
-          type: string
+          type: integer
           description: Unique identifier for the employee
         name:
           type: string
@@ -848,7 +893,7 @@ components:
       type: object
       properties:
         employeeId:
-          type: string
+          type: integer
           description: Unique identifier for the employee
         name:
           type: string
@@ -867,6 +912,7 @@ components:
           type: string
           format: password
           description: Employee's password (should be encrypted)
+
     Promotion:
       type: object
       properties:
@@ -961,7 +1007,7 @@ components:
                 type: string
                 description: Success message indicating movie creation
               movie:
-                $ref: '#/components/schemas/Movie'
+                $ref: '#/components/schemas/MovieResponse'
     ShowtimeNotFound:
       description: The specified showtime was not found
       content:

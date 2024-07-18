@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T11:01:02.954251+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-18T12:52:09.357085+07:00[Asia/Ho_Chi_Minh]")
 @Validated
 @Tag(name = "Employees", description = "the Employees API")
 public interface EmployeesApi {
@@ -73,7 +73,7 @@ public interface EmployeesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : \"employeeId\", \"position\" : \"position\", \"email\" : \"email\" }";
+                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : 0, \"position\" : \"position\", \"email\" : \"email\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -93,7 +93,7 @@ public interface EmployeesApi {
      *         or An internal server error occurred (status code 500)
      */
     @Operation(
-        operationId = "employeesIdDelete",
+        operationId = "deleteEmployee",
         summary = "Delete an employee (only admin users can perform this action)",
         tags = { "Employees" },
         responses = {
@@ -111,8 +111,8 @@ public interface EmployeesApi {
         value = "/employees/{id}",
         produces = { "application/json" }
     )
-    default ResponseEntity<Void> employeesIdDelete(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id
+    default ResponseEntity<Void> deleteEmployee(
+        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -145,12 +145,12 @@ public interface EmployeesApi {
         produces = { "application/json" }
     )
     default ResponseEntity<EmployeeResponse> getEmployeeById(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id
+        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : \"employeeId\", \"position\" : \"position\", \"email\" : \"email\" }";
+                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : 0, \"position\" : \"position\", \"email\" : \"email\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -187,7 +187,7 @@ public interface EmployeesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : \"employeeId\", \"position\" : \"position\", \"email\" : \"email\" }, { \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : \"employeeId\", \"position\" : \"position\", \"email\" : \"email\" } ]";
+                    String exampleString = "[ { \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : 0, \"position\" : \"position\", \"email\" : \"email\" }, { \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : 0, \"position\" : \"position\", \"email\" : \"email\" } ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -238,7 +238,7 @@ public interface EmployeesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : \"employeeId\", \"position\" : \"position\", \"email\" : \"email\" }";
+                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"name\" : \"name\", \"employeeId\" : 0, \"position\" : \"position\", \"email\" : \"email\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

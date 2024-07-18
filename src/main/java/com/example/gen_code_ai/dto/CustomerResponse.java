@@ -19,10 +19,10 @@ import jakarta.annotation.Generated;
  * CustomerResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T11:01:02.954251+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-18T12:52:09.357085+07:00[Asia/Ho_Chi_Minh]")
 public class CustomerResponse {
 
-  private String customerId;
+  private Integer customerId;
 
   private String name;
 
@@ -69,7 +69,7 @@ public class CustomerResponse {
 
   private MembershipStatusEnum membershipStatus;
 
-  public CustomerResponse customerId(String customerId) {
+  public CustomerResponse customerId(Integer customerId) {
     this.customerId = customerId;
     return this;
   }
@@ -81,11 +81,11 @@ public class CustomerResponse {
   
   @Schema(name = "customerId", description = "Unique identifier for the customer", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("customerId")
-  public String getCustomerId() {
+  public Integer getCustomerId() {
     return customerId;
   }
 
-  public void setCustomerId(String customerId) {
+  public void setCustomerId(Integer customerId) {
     this.customerId = customerId;
   }
 

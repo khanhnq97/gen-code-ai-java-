@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("_showtimes__id__get_404_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T11:01:02.954251+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T16:53:19.237975+07:00[Asia/Ho_Chi_Minh]")
 public class ShowtimesIdGet404Response {
 
   private String message;

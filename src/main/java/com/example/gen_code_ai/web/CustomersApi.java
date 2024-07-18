@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T11:01:02.954251+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-18T12:52:09.357085+07:00[Asia/Ho_Chi_Minh]")
 @Validated
 @Tag(name = "Customers", description = "the Customers API")
 public interface CustomersApi {
@@ -73,7 +73,7 @@ public interface CustomersApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : \"customerId\", \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
+                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 0, \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -112,7 +112,7 @@ public interface CustomersApi {
         produces = { "application/json" }
     )
     default ResponseEntity<Void> deleteCustomer(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id
+        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -145,12 +145,12 @@ public interface CustomersApi {
         produces = { "application/json" }
     )
     default ResponseEntity<CustomerResponse> getCustomerById(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id
+        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : \"customerId\", \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
+                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 0, \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -187,7 +187,7 @@ public interface CustomersApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : \"customerId\", \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }, { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : \"customerId\", \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" } ]";
+                    String exampleString = "[ { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 0, \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }, { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 0, \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" } ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -238,7 +238,7 @@ public interface CustomersApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : \"customerId\", \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
+                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 0, \"name\" : \"name\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

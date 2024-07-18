@@ -5,8 +5,8 @@
  */
 package com.example.gen_code_ai.web;
 
-import com.example.gen_code_ai.dto.Movie;
 import com.example.gen_code_ai.dto.MovieRequest;
+import com.example.gen_code_ai.dto.MovieResponse;
 import com.example.gen_code_ai.dto.UpdateMovie404Response;
 import com.example.gen_code_ai.dto.UpdateMovie409Response;
 import com.example.gen_code_ai.dto.UpdateMovie500Response;
@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T11:01:02.954251+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-18T12:52:09.357085+07:00[Asia/Ho_Chi_Minh]")
 @Validated
 @Tag(name = "Movies", description = "Operations about movies")
 public interface MoviesApi {
@@ -57,7 +57,7 @@ public interface MoviesApi {
         tags = { "Movies" },
         responses = {
             @ApiResponse(responseCode = "201", description = "Created", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Movie.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MovieResponse.class))
             })
         }
     )
@@ -67,13 +67,13 @@ public interface MoviesApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Movie> createMovie(
+    default ResponseEntity<MovieResponse> createMovie(
         @Parameter(name = "MovieRequest", description = "", required = true) @Valid @RequestBody MovieRequest movieRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"duration\" : 0, \"cast\" : \"cast\", \"releaseDate\" : \"2000-01-23T04:56:07.000+00:00\", \"director\" : \"director\", \"genre\" : \"genre\", \"description\" : \"description\", \"movieId\" : \"movieId\", \"title\" : \"title\" }";
+                    String exampleString = "{ \"duration\" : 6, \"cast\" : \"cast\", \"releaseDate\" : \"2000-01-23T04:56:07.000+00:00\", \"director\" : \"director\", \"genre\" : \"genre\", \"description\" : \"description\", \"movieId\" : 0, \"title\" : \"title\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -112,7 +112,7 @@ public interface MoviesApi {
         produces = { "application/json" }
     )
     default ResponseEntity<Void> deleteMovie(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") String id
+        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -132,7 +132,7 @@ public interface MoviesApi {
         tags = { "Movies" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Movie.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MovieResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "The specified movie was not found", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateMovie404Response.class))
@@ -144,13 +144,13 @@ public interface MoviesApi {
         value = "/movies/{id}",
         produces = { "application/json" }
     )
-    default ResponseEntity<Movie> getMovieById(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") String id
+    default ResponseEntity<MovieResponse> getMovieById(
+        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"duration\" : 0, \"cast\" : \"cast\", \"releaseDate\" : \"2000-01-23T04:56:07.000+00:00\", \"director\" : \"director\", \"genre\" : \"genre\", \"description\" : \"description\", \"movieId\" : \"movieId\", \"title\" : \"title\" }";
+                    String exampleString = "{ \"duration\" : 6, \"cast\" : \"cast\", \"releaseDate\" : \"2000-01-23T04:56:07.000+00:00\", \"director\" : \"director\", \"genre\" : \"genre\", \"description\" : \"description\", \"movieId\" : 0, \"title\" : \"title\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -174,7 +174,7 @@ public interface MoviesApi {
         tags = { "Movies" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Movie.class)))
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = MovieResponse.class)))
             })
         }
     )
@@ -183,13 +183,13 @@ public interface MoviesApi {
         value = "/movies",
         produces = { "application/json" }
     )
-    default ResponseEntity<List<Movie>> getMovies(
+    default ResponseEntity<List<MovieResponse>> getMovies(
         
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"duration\" : 0, \"cast\" : \"cast\", \"releaseDate\" : \"2000-01-23T04:56:07.000+00:00\", \"director\" : \"director\", \"genre\" : \"genre\", \"description\" : \"description\", \"movieId\" : \"movieId\", \"title\" : \"title\" }, { \"duration\" : 0, \"cast\" : \"cast\", \"releaseDate\" : \"2000-01-23T04:56:07.000+00:00\", \"director\" : \"director\", \"genre\" : \"genre\", \"description\" : \"description\", \"movieId\" : \"movieId\", \"title\" : \"title\" } ]";
+                    String exampleString = "[ { \"duration\" : 6, \"cast\" : \"cast\", \"releaseDate\" : \"2000-01-23T04:56:07.000+00:00\", \"director\" : \"director\", \"genre\" : \"genre\", \"description\" : \"description\", \"movieId\" : 0, \"title\" : \"title\" }, { \"duration\" : 6, \"cast\" : \"cast\", \"releaseDate\" : \"2000-01-23T04:56:07.000+00:00\", \"director\" : \"director\", \"genre\" : \"genre\", \"description\" : \"description\", \"movieId\" : 0, \"title\" : \"title\" } ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -203,7 +203,7 @@ public interface MoviesApi {
     /**
      * PUT /movies : Update details of a specific movie
      *
-     * @param movie  (required)
+     * @param movieRequest  (required)
      * @return OK (status code 200)
      *         or The specified movie was not found (status code 404)
      *         or A movie with the same ID already exists (status code 409)
@@ -215,7 +215,7 @@ public interface MoviesApi {
         tags = { "Movies" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Movie.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = MovieResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "The specified movie was not found", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateMovie404Response.class))
@@ -234,13 +234,13 @@ public interface MoviesApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Movie> updateMovie(
-        @Parameter(name = "Movie", description = "", required = true) @Valid @RequestBody Movie movie
+    default ResponseEntity<MovieResponse> updateMovie(
+        @Parameter(name = "MovieRequest", description = "", required = true) @Valid @RequestBody MovieRequest movieRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"duration\" : 0, \"cast\" : \"cast\", \"releaseDate\" : \"2000-01-23T04:56:07.000+00:00\", \"director\" : \"director\", \"genre\" : \"genre\", \"description\" : \"description\", \"movieId\" : \"movieId\", \"title\" : \"title\" }";
+                    String exampleString = "{ \"duration\" : 6, \"cast\" : \"cast\", \"releaseDate\" : \"2000-01-23T04:56:07.000+00:00\", \"director\" : \"director\", \"genre\" : \"genre\", \"description\" : \"description\", \"movieId\" : 0, \"title\" : \"title\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

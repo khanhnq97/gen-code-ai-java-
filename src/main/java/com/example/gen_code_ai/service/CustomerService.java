@@ -6,6 +6,7 @@ import com.example.gen_code_ai.entity.CustomerEntity;
 import com.example.gen_code_ai.exception.CustomerAlreadyExistsException;
 import com.example.gen_code_ai.exception.CustomerNotFoundException;
 import com.example.gen_code_ai.repository.CustomerRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class CustomerService {
         return convertEntityToResponse(savedCustomer);
     }
 
-    public CustomerResponse getCustomerById(String id) {
+    public CustomerResponse getCustomerById(Integer id) {
         CustomerEntity customer = customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
         return convertEntityToResponse(customer);
     }
@@ -56,7 +57,7 @@ public class CustomerService {
         return convertEntityToResponse(updatedCustomer);
     }
 
-    public void deleteCustomer(String id) {
+    public void deleteCustomer(Integer id) {
         if (!customerRepository.existsById(id)) {
             throw new CustomerNotFoundException("Customer not found");
         }
@@ -67,7 +68,7 @@ public class CustomerService {
     // convertcustomerentitytocustomerresponse
     private CustomerResponse convertEntityToResponse(CustomerEntity customer) {
         CustomerResponse response = new CustomerResponse();
-        response.setCustomerId(customer.getId());
+        response.setCustomerId(customer.getCustomerId());
         response.setName(customer.getName());
         response.setEmail(customer.getEmail());
         response.setPhone(customer.getPhone());

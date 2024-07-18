@@ -1,27 +1,26 @@
 package com.example.gen_code_ai.entity;
 
-import com.example.gen_code_ai.model.MembershipStatus;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "Customers")
 public class CustomerEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "customer_id")
+    private Integer customerId;
     private String name;
     private String email;
     private String phone;
     private String password;
     private String membershipStatus;
 
-    public String getId() {
-        return id;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
     public String getName() {
@@ -66,7 +65,7 @@ public class CustomerEntity {
 
     @Override
     public String toString() {
-        return "CustomerEntity{" + "id='" + id + '\'' + ", name='" + name + '\'' + ", email='" + email + '\'' + ", phone='" + phone + '\'' + ", password='" + password + '\'' + ", membershipStatus=" + membershipStatus + '}';
+        return "CustomerEntity{" + "id='" + customerId + '\'' + ", name='" + name + '\'' + ", email='" + email + '\'' + ", phone='" + phone + '\'' + ", password='" + password + '\'' + ", membershipStatus=" + membershipStatus + '}';
     }
 }
 

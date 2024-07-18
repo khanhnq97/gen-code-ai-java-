@@ -1,7 +1,8 @@
 package com.example.gen_code_ai.service;
 
 import com.example.gen_code_ai.dto.MovieRequest;
-import com.example.gen_code_ai.entity.Movie;
+import com.example.gen_code_ai.dto.MovieResponse;
+import com.example.gen_code_ai.entity.MovieEntity;
 import com.example.gen_code_ai.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,23 +20,23 @@ public class MovieService {
         this.movieRepository = movieRepository;
     }
 
-    public List<com.example.gen_code_ai.dto.Movie> getAllMovies() {
-        List<Movie> movies = movieRepository.findAll();
+    public List<MovieResponse> getAllMovies() {
+        List<MovieEntity> movies = movieRepository.findAll();
         return convertMovieEntityListToMovieList(movies);
     }
 
-    public com.example.gen_code_ai.dto.Movie createMovie(MovieRequest movieRequest) {
-        Movie movie = convertMovieRequestToMovieEntity(movieRequest);
-        // Map properties from movieRequest to movie
-        return convertMovieEntityToMovie(movieRepository.save(movie));
+    public MovieResponse createMovie(MovieRequest movieRequest) {
+        MovieEntity movie = convertMovieRequestToMovieEntity(movieRequest);
+        MovieEntity savedMovie = movieRepository.save(movie);
+        return convertMovieEntityToMovieResponse(savedMovie);
     }
 
-    public com.example.gen_code_ai.dto.Movie getMovieById(String id) {
-        return convertMovieEntityToMovie(movieRepository.findById(id).orElseThrow(() -> new RuntimeException("Movie not found")));
+    public MovieResponse getMovieById(Integer id) {
+        return convertMovieEntityToMovieResponse(movieRepository.findById(id).orElseThrow(() -> new RuntimeException("Movie not found")));
     }
 
-    public com.example.gen_code_ai.dto.Movie updateMovie(com.example.gen_code_ai.dto.Movie movie) {
-        Movie movieEntity = movieRepository.findById(movie.getMovieId()).orElseThrow(() -> new RuntimeException("Movie not found"));
+    public MovieResponse updateMovie(MovieRequest movie) {
+        MovieEntity movieEntity = movieRepository.findById(movie.getMovieId()).orElseThrow(() -> new RuntimeException("Movie not found"));
         // Map properties from movie to movieEntity
         movieEntity.setTitle(movie.getTitle());
         movieEntity.setDirector(movie.getDirector());
@@ -44,22 +45,21 @@ public class MovieService {
         movieEntity.setDescription(movie.getDescription());
         movieEntity.setDuration(movie.getDuration());
         movieEntity.setReleaseDate(movie.getReleaseDate());
-        return convertMovieEntityToMovie(movieRepository.save(movieEntity));
+        return convertMovieEntityToMovieResponse(movieRepository.save(movieEntity));
     }
 
-    public void deleteMovie(String id) {
-        com.example.gen_code_ai.dto.Movie movie = getMovieById(id);
+    public void deleteMovie(Integer id) {
+        MovieResponse movie = getMovieById(id);
         movieRepository.delete(convertMovieToMovieEntity(movie));
     }
 
     // convertMovieEntityListToMovieList
-    private List<com.example.gen_code_ai.dto.Movie> convertMovieEntityListToMovieList(List<Movie> movies) {
-        List<com.example.gen_code_ai.dto.Movie> moviesList = new ArrayList<>();
-        for (Movie movieEntity : movies) {
-            com.example.gen_code_ai.dto.Movie movie = new com.example.gen_code_ai.dto.Movie();
+    private List<MovieResponse> convertMovieEntityListToMovieList(List<MovieEntity> movies) {
+        List<MovieResponse> moviesList = new ArrayList<>();
+        for (MovieEntity movieEntity : movies) {
+            MovieResponse movie = new MovieResponse();
             // Map properties from movieEntity to movie
-            movie.setMovieId(movieEntity.getMovieId());
-            movie.setMovieId(movieEntity.getMovieId());
+            movie.setMovieId(movieEntity.getId());
             movie.setTitle(movieEntity.getTitle());
             movie.setDirector(movieEntity.getDirector());
             movie.setCast(movieEntity.getCast());
@@ -73,11 +73,10 @@ public class MovieService {
     }
 
     // convertMovieEntityToMovie
-    private com.example.gen_code_ai.dto.Movie convertMovieEntityToMovie(Movie movieEntity) {
-        com.example.gen_code_ai.dto.Movie movie = new com.example.gen_code_ai.dto.Movie();
+    private MovieResponse convertMovieEntityToMovieResponse(MovieEntity movieEntity) {
+        MovieResponse movie = new MovieResponse();
         // Map properties from movieEntity to movie
-        movie.setMovieId(movieEntity.getMovieId());
-        movie.setMovieId(movieEntity.getMovieId());
+        movie.setMovieId(movieEntity.getId());
         movie.setTitle(movieEntity.getTitle());
         movie.setDirector(movieEntity.getDirector());
         movie.setCast(movieEntity.getCast());
@@ -89,11 +88,10 @@ public class MovieService {
     }
 
     // convertMovieToMovieEntity
-    private Movie convertMovieToMovieEntity(com.example.gen_code_ai.dto.Movie movie) {
-        Movie movieEntity = new Movie();
+    private MovieEntity convertMovieToMovieEntity(MovieResponse movie) {
+        MovieEntity movieEntity = new MovieEntity();
         // Map properties from movie to movieEntity
-        movieEntity.setMovieId(movie.getMovieId());
-        movieEntity.setMovieId(movie.getMovieId());
+        movieEntity.setId(movie.getMovieId());
         movieEntity.setTitle(movie.getTitle());
         movieEntity.setDirector(movie.getDirector());
         movieEntity.setCast(movie.getCast());
@@ -105,8 +103,8 @@ public class MovieService {
     }
 
     // convertMovieRequestToMovieEntity
-    private Movie convertMovieRequestToMovieEntity(MovieRequest movieRequest) {
-        Movie movie = new Movie();
+    private MovieEntity convertMovieRequestToMovieEntity(MovieRequest movieRequest) {
+        MovieEntity movie = new MovieEntity();
         // Map properties from movieRequest to movieEntity
         movie.setTitle(movieRequest.getTitle());
         movie.setDirector(movieRequest.getDirector());

@@ -5,10 +5,11 @@
  */
 package com.example.gen_code_ai.web;
 
-import com.example.gen_code_ai.dto.Showtime;
-import com.example.gen_code_ai.dto.ShowtimesIdGet404Response;
-import com.example.gen_code_ai.dto.ShowtimesIdPut409Response;
+import com.example.gen_code_ai.dto.ShowtimeRequest;
+import com.example.gen_code_ai.dto.ShowtimeResponse;
 import com.example.gen_code_ai.dto.UpdateMovie500Response;
+import com.example.gen_code_ai.dto.UpdateShowtime404Response;
+import com.example.gen_code_ai.dto.UpdateShowtime409Response;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -35,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T11:01:02.954251+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-18T12:52:09.357085+07:00[Asia/Ho_Chi_Minh]")
 @Validated
 @Tag(name = "Showtimes", description = "the Showtimes API")
 public interface ShowtimesApi {
@@ -45,32 +46,34 @@ public interface ShowtimesApi {
     }
 
     /**
-     * GET /showtimes : List all showtimes
+     * POST /showtimes : Create a new showtime
      *
-     * @return OK (status code 200)
+     * @param showtimeRequest  (required)
+     * @return Created (status code 201)
      */
     @Operation(
-        operationId = "showtimesGet",
-        summary = "List all showtimes",
+        operationId = "createShowtime",
+        summary = "Create a new showtime",
         tags = { "Showtimes" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Showtime.class)))
+            @ApiResponse(responseCode = "201", description = "Created", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ShowtimeResponse.class))
             })
         }
     )
     @RequestMapping(
-        method = RequestMethod.GET,
+        method = RequestMethod.POST,
         value = "/showtimes",
-        produces = { "application/json" }
+        produces = { "application/json" },
+        consumes = { "application/json" }
     )
-    default ResponseEntity<List<Showtime>> showtimesGet(
-        
+    default ResponseEntity<ShowtimeResponse> createShowtime(
+        @Parameter(name = "ShowtimeRequest", description = "", required = true) @Valid @RequestBody ShowtimeRequest showtimeRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"theaterId\" : 1, \"price\" : 5.962133916683182, \"showtimeId\" : 0, \"movieId\" : 6, \"startTime\" : \"2000-01-23T04:56:07.000+00:00\", \"endTime\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"theaterId\" : 1, \"price\" : 5.962133916683182, \"showtimeId\" : 0, \"movieId\" : 6, \"startTime\" : \"2000-01-23T04:56:07.000+00:00\", \"endTime\" : \"2000-01-23T04:56:07.000+00:00\" } ]";
+                    String exampleString = "{ \"theaterId\" : 1, \"price\" : 5.962133916683182, \"showtimeId\" : 0, \"movieId\" : 6, \"startTime\" : \"2000-01-23T04:56:07.000+00:00\", \"endTime\" : \"2000-01-23T04:56:07.000+00:00\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -90,13 +93,13 @@ public interface ShowtimesApi {
      *         or An internal server error occurred (status code 500)
      */
     @Operation(
-        operationId = "showtimesIdDelete",
+        operationId = "deleteShowtime",
         summary = "Delete a specific showtime",
         tags = { "Showtimes" },
         responses = {
             @ApiResponse(responseCode = "204", description = "No Content"),
             @ApiResponse(responseCode = "404", description = "The specified showtime was not found", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ShowtimesIdGet404Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateShowtime404Response.class))
             }),
             @ApiResponse(responseCode = "500", description = "An internal server error occurred", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateMovie500Response.class))
@@ -108,8 +111,8 @@ public interface ShowtimesApi {
         value = "/showtimes/{id}",
         produces = { "application/json" }
     )
-    default ResponseEntity<Void> showtimesIdDelete(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id
+    default ResponseEntity<Void> deleteShowtime(
+        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -124,15 +127,15 @@ public interface ShowtimesApi {
      *         or The specified showtime was not found (status code 404)
      */
     @Operation(
-        operationId = "showtimesIdGet",
+        operationId = "getShowtimeById",
         summary = "Get details of a specific showtime",
         tags = { "Showtimes" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Showtime.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ShowtimeResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "The specified showtime was not found", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ShowtimesIdGet404Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateShowtime404Response.class))
             })
         }
     )
@@ -141,8 +144,8 @@ public interface ShowtimesApi {
         value = "/showtimes/{id}",
         produces = { "application/json" }
     )
-    default ResponseEntity<Showtime> showtimesIdGet(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id
+    default ResponseEntity<ShowtimeResponse> getShowtimeById(
+        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -159,28 +162,66 @@ public interface ShowtimesApi {
 
 
     /**
-     * PUT /showtimes/{id} : Update details of a specific showtime
+     * GET /showtimes : List all showtimes
+     * Generates a list of all showtimes
      *
-     * @param id  (required)
-     * @param showtime  (required)
+     * @return OK (status code 200)
+     */
+    @Operation(
+        operationId = "getShowtimes",
+        summary = "List all showtimes",
+        description = "Generates a list of all showtimes",
+        tags = { "Showtimes" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ShowtimeResponse.class)))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/showtimes",
+        produces = { "application/json" }
+    )
+    default ResponseEntity<List<ShowtimeResponse>> getShowtimes(
+        
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "[ { \"theaterId\" : 1, \"price\" : 5.962133916683182, \"showtimeId\" : 0, \"movieId\" : 6, \"startTime\" : \"2000-01-23T04:56:07.000+00:00\", \"endTime\" : \"2000-01-23T04:56:07.000+00:00\" }, { \"theaterId\" : 1, \"price\" : 5.962133916683182, \"showtimeId\" : 0, \"movieId\" : 6, \"startTime\" : \"2000-01-23T04:56:07.000+00:00\", \"endTime\" : \"2000-01-23T04:56:07.000+00:00\" } ]";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    /**
+     * PUT /showtimes : Update details of a specific showtime
+     *
+     * @param showtimeRequest  (required)
      * @return OK (status code 200)
      *         or The specified showtime was not found (status code 404)
      *         or A showtime with the same ID already exists (status code 409)
      *         or An internal server error occurred (status code 500)
      */
     @Operation(
-        operationId = "showtimesIdPut",
+        operationId = "updateShowtime",
         summary = "Update details of a specific showtime",
         tags = { "Showtimes" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Showtime.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ShowtimeResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "The specified showtime was not found", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ShowtimesIdGet404Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateShowtime404Response.class))
             }),
             @ApiResponse(responseCode = "409", description = "A showtime with the same ID already exists", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ShowtimesIdPut409Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateShowtime409Response.class))
             }),
             @ApiResponse(responseCode = "500", description = "An internal server error occurred", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateMovie500Response.class))
@@ -189,52 +230,12 @@ public interface ShowtimesApi {
     )
     @RequestMapping(
         method = RequestMethod.PUT,
-        value = "/showtimes/{id}",
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Showtime> showtimesIdPut(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id,
-        @Parameter(name = "Showtime", description = "", required = true) @Valid @RequestBody Showtime showtime
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"theaterId\" : 1, \"price\" : 5.962133916683182, \"showtimeId\" : 0, \"movieId\" : 6, \"startTime\" : \"2000-01-23T04:56:07.000+00:00\", \"endTime\" : \"2000-01-23T04:56:07.000+00:00\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    /**
-     * POST /showtimes : Create a new showtime
-     *
-     * @param showtime  (required)
-     * @return Created (status code 201)
-     */
-    @Operation(
-        operationId = "showtimesPost",
-        summary = "Create a new showtime",
-        tags = { "Showtimes" },
-        responses = {
-            @ApiResponse(responseCode = "201", description = "Created", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Showtime.class))
-            })
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
         value = "/showtimes",
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Showtime> showtimesPost(
-        @Parameter(name = "Showtime", description = "", required = true) @Valid @RequestBody Showtime showtime
+    default ResponseEntity<ShowtimeResponse> updateShowtime(
+        @Parameter(name = "ShowtimeRequest", description = "", required = true) @Valid @RequestBody ShowtimeRequest showtimeRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {

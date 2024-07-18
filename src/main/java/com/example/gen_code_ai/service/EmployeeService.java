@@ -35,12 +35,12 @@ public class EmployeeService {
         return convertEntityToResponse(updatedEmployeeSaved);
     }
 
-    public EmployeeResponse getEmployeeById(String id) {
+    public EmployeeResponse getEmployeeById(Integer id) {
         EmployeeEntity employee = employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: " + id));
         return convertEntityToResponse(employee);
     }
 
-    public void deleteEmployee(String id) {
+    public void deleteEmployee(Integer id) {
         if (!employeeRepository.existsById(id)) {
             throw new EmployeeNotFoundException("Employee not found with id: " + id);
         }

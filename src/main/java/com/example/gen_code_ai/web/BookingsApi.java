@@ -5,10 +5,11 @@
  */
 package com.example.gen_code_ai.web;
 
-import com.example.gen_code_ai.dto.Booking;
-import com.example.gen_code_ai.dto.BookingsIdGet404Response;
-import com.example.gen_code_ai.dto.BookingsIdPut409Response;
-import com.example.gen_code_ai.dto.BookingsIdPut422Response;
+import com.example.gen_code_ai.dto.BookingRequest;
+import com.example.gen_code_ai.dto.BookingResponse;
+import com.example.gen_code_ai.dto.UpdateBooking404Response;
+import com.example.gen_code_ai.dto.UpdateBooking409Response;
+import com.example.gen_code_ai.dto.UpdateBooking422Response;
 import com.example.gen_code_ai.dto.UpdateMovie500Response;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,7 +37,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T11:01:02.954251+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-18T12:52:09.357085+07:00[Asia/Ho_Chi_Minh]")
 @Validated
 @Tag(name = "Bookings", description = "the Bookings API")
 public interface BookingsApi {
@@ -44,43 +45,6 @@ public interface BookingsApi {
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
-
-    /**
-     * GET /bookings : List all bookings
-     *
-     * @return OK (status code 200)
-     */
-    @Operation(
-        operationId = "bookingsGet",
-        summary = "List all bookings",
-        tags = { "Bookings" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Booking.class)))
-            })
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/bookings",
-        produces = { "application/json" }
-    )
-    default ResponseEntity<List<Booking>> bookingsGet(
-        
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"totalAmount\" : 5.962133916683182, \"customerId\" : 6, \"showtimeId\" : 1, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"bookingId\" : 0 }, { \"totalAmount\" : 5.962133916683182, \"customerId\" : 6, \"showtimeId\" : 1, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"bookingId\" : 0 } ]";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
 
     /**
      * DELETE /bookings/{id} : Cancel a booking
@@ -91,13 +55,13 @@ public interface BookingsApi {
      *         or An internal server error occurred (status code 500)
      */
     @Operation(
-        operationId = "bookingsIdDelete",
+        operationId = "cancelBooking",
         summary = "Cancel a booking",
         tags = { "Bookings" },
         responses = {
             @ApiResponse(responseCode = "204", description = "No Content"),
             @ApiResponse(responseCode = "404", description = "The specified booking was not found", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = BookingsIdGet404Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateBooking404Response.class))
             }),
             @ApiResponse(responseCode = "500", description = "An internal server error occurred", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateMovie500Response.class))
@@ -109,9 +73,48 @@ public interface BookingsApi {
         value = "/bookings/{id}",
         produces = { "application/json" }
     )
-    default ResponseEntity<Void> bookingsIdDelete(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id
+    default ResponseEntity<Void> cancelBooking(
+        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
     ) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    /**
+     * POST /bookings : Create a new booking
+     *
+     * @param bookingRequest  (required)
+     * @return Created (status code 201)
+     */
+    @Operation(
+        operationId = "createBooking",
+        summary = "Create a new booking",
+        tags = { "Bookings" },
+        responses = {
+            @ApiResponse(responseCode = "201", description = "Created", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = BookingResponse.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = "/bookings",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<BookingResponse> createBooking(
+        @Parameter(name = "BookingRequest", description = "", required = true) @Valid @RequestBody BookingRequest bookingRequest
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"totalAmount\" : 5.962133916683182, \"ticketPrice\" : 5.637376656633329, \"customerId\" : 6, \"showtimeId\" : 1, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"movieId\" : 2, \"bookingId\" : 0 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
@@ -125,15 +128,15 @@ public interface BookingsApi {
      *         or The specified booking was not found (status code 404)
      */
     @Operation(
-        operationId = "bookingsIdGet",
+        operationId = "getBookingById",
         summary = "Get details of a specific booking",
         tags = { "Bookings" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Booking.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = BookingResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "The specified booking was not found", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = BookingsIdGet404Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateBooking404Response.class))
             })
         }
     )
@@ -142,13 +145,13 @@ public interface BookingsApi {
         value = "/bookings/{id}",
         produces = { "application/json" }
     )
-    default ResponseEntity<Booking> bookingsIdGet(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id
+    default ResponseEntity<BookingResponse> getBookingById(
+        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"totalAmount\" : 5.962133916683182, \"customerId\" : 6, \"showtimeId\" : 1, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"bookingId\" : 0 }";
+                    String exampleString = "{ \"totalAmount\" : 5.962133916683182, \"ticketPrice\" : 5.637376656633329, \"customerId\" : 6, \"showtimeId\" : 1, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"movieId\" : 2, \"bookingId\" : 0 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -160,10 +163,46 @@ public interface BookingsApi {
 
 
     /**
-     * PUT /bookings/{id} : Update details of a specific booking (e.g., add/remove tickets)
+     * GET /bookings : List all bookings
      *
-     * @param id  (required)
-     * @param booking  (required)
+     * @return OK (status code 200)
+     */
+    @Operation(
+        operationId = "getBookings",
+        summary = "List all bookings",
+        tags = { "Bookings" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = BookingResponse.class)))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/bookings",
+        produces = { "application/json" }
+    )
+    default ResponseEntity<List<BookingResponse>> getBookings(
+        
+    ) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "[ { \"totalAmount\" : 5.962133916683182, \"ticketPrice\" : 5.637376656633329, \"customerId\" : 6, \"showtimeId\" : 1, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"movieId\" : 2, \"bookingId\" : 0 }, { \"totalAmount\" : 5.962133916683182, \"ticketPrice\" : 5.637376656633329, \"customerId\" : 6, \"showtimeId\" : 1, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"movieId\" : 2, \"bookingId\" : 0 } ]";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    /**
+     * PUT /bookings : Update details of a specific booking (e.g., add/remove tickets)
+     *
+     * @param bookingRequest  (required)
      * @return OK (status code 200)
      *         or The specified booking was not found (status code 404)
      *         or A booking with the same ID already exists (status code 409)
@@ -171,21 +210,21 @@ public interface BookingsApi {
      *         or An internal server error occurred (status code 500)
      */
     @Operation(
-        operationId = "bookingsIdPut",
+        operationId = "updateBooking",
         summary = "Update details of a specific booking (e.g., add/remove tickets)",
         tags = { "Bookings" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Booking.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = BookingResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "The specified booking was not found", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = BookingsIdGet404Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateBooking404Response.class))
             }),
             @ApiResponse(responseCode = "409", description = "A booking with the same ID already exists", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = BookingsIdPut409Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateBooking409Response.class))
             }),
             @ApiResponse(responseCode = "422", description = "There are not enough tickets available for the requested showtime", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = BookingsIdPut422Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateBooking422Response.class))
             }),
             @ApiResponse(responseCode = "500", description = "An internal server error occurred", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = UpdateMovie500Response.class))
@@ -194,57 +233,17 @@ public interface BookingsApi {
     )
     @RequestMapping(
         method = RequestMethod.PUT,
-        value = "/bookings/{id}",
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<Booking> bookingsIdPut(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id,
-        @Parameter(name = "Booking", description = "", required = true) @Valid @RequestBody Booking booking
-    ) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"totalAmount\" : 5.962133916683182, \"customerId\" : 6, \"showtimeId\" : 1, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"bookingId\" : 0 }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    /**
-     * POST /bookings : Create a new booking
-     *
-     * @param booking  (required)
-     * @return Created (status code 201)
-     */
-    @Operation(
-        operationId = "bookingsPost",
-        summary = "Create a new booking",
-        tags = { "Bookings" },
-        responses = {
-            @ApiResponse(responseCode = "201", description = "Created", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Booking.class))
-            })
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
         value = "/bookings",
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Booking> bookingsPost(
-        @Parameter(name = "Booking", description = "", required = true) @Valid @RequestBody Booking booking
+    default ResponseEntity<BookingResponse> updateBooking(
+        @Parameter(name = "BookingRequest", description = "", required = true) @Valid @RequestBody BookingRequest bookingRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"totalAmount\" : 5.962133916683182, \"customerId\" : 6, \"showtimeId\" : 1, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"bookingId\" : 0 }";
+                    String exampleString = "{ \"totalAmount\" : 5.962133916683182, \"ticketPrice\" : 5.637376656633329, \"customerId\" : 6, \"showtimeId\" : 1, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"movieId\" : 2, \"bookingId\" : 0 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

@@ -1,37 +1,45 @@
 package com.example.gen_code_ai.entity;
 
 import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 @Entity
-public class Movie {
+@Table(name = "Movies")
+public class MovieEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String movieId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "movie_id")
+    private Integer id;
 
+    @Column(name = "title", nullable = false)
     private String title;
 
+    @Column(name = "description")
     private String description;
 
+    @Column(name = "duration")
     private Integer duration;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @Column(name = "release_date")
     private OffsetDateTime releaseDate;
 
+    @Column(name = "genre")
     private String genre;
 
+    @Column(name = "director")
     private String director;
 
+    @Column(name = "cast")
     private String cast;
 
-    public String getMovieId() {
-        return movieId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setMovieId(String movieId) {
-        this.movieId = movieId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTitle() {

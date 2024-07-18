@@ -18,10 +18,10 @@ import jakarta.annotation.Generated;
  * EmployeeResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T11:01:02.954251+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-18T12:52:09.357085+07:00[Asia/Ho_Chi_Minh]")
 public class EmployeeResponse {
 
-  private String employeeId;
+  private Integer employeeId;
 
   private String name;
 
@@ -33,7 +33,7 @@ public class EmployeeResponse {
 
   private String password;
 
-  public EmployeeResponse employeeId(String employeeId) {
+  public EmployeeResponse employeeId(Integer employeeId) {
     this.employeeId = employeeId;
     return this;
   }
@@ -45,11 +45,11 @@ public class EmployeeResponse {
   
   @Schema(name = "employeeId", description = "Unique identifier for the employee", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("employeeId")
-  public String getEmployeeId() {
+  public Integer getEmployeeId() {
     return employeeId;
   }
 
-  public void setEmployeeId(String employeeId) {
+  public void setEmployeeId(Integer employeeId) {
     this.employeeId = employeeId;
   }
 

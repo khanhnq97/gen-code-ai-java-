@@ -5,6 +5,7 @@ import com.example.gen_code_ai.dto.EmployeeResponse;
 import com.example.gen_code_ai.exception.EmployeeAlreadyExistsException;
 import com.example.gen_code_ai.exception.EmployeeNotFoundException;
 import com.example.gen_code_ai.service.EmployeeService;
+import com.example.gen_code_ai.web.EmployeesApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,21 +14,24 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class EmployeeController {
+public class EmployeeController implements EmployeesApi {
 
     @Autowired
     private EmployeeService employeeService;
 
+    @Override
     public ResponseEntity<List<EmployeeResponse>> getEmployees() {
         List<EmployeeResponse> employees = employeeService.getAllEmployees();
         return ResponseEntity.ok(employees);
     }
 
+    @Override
     public ResponseEntity<EmployeeResponse> createEmployee(EmployeeRequest employeeRequest) {
         EmployeeResponse createdEmployee = employeeService.createEmployee(employeeRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
     }
 
+    @Override
     public ResponseEntity<EmployeeResponse> updateEmployee(EmployeeRequest employeeRequest) {
         try {
             EmployeeResponse updatedEmployee = employeeService.updateEmployee(employeeRequest);
@@ -41,7 +45,8 @@ public class EmployeeController {
         }
     }
 
-    public ResponseEntity<EmployeeResponse> getEmployeeById(String id) {
+    @Override
+    public ResponseEntity<EmployeeResponse> getEmployeeById(Integer id) {
         try {
             EmployeeResponse employee = employeeService.getEmployeeById(id);
             return ResponseEntity.ok(employee);
@@ -50,7 +55,8 @@ public class EmployeeController {
         }
     }
 
-    public ResponseEntity<Void> deleteEmployee(String id) {
+    @Override
+    public ResponseEntity<Void> deleteEmployee(Integer id) {
         try {
             employeeService.deleteEmployee(id);
             return ResponseEntity.noContent().build();

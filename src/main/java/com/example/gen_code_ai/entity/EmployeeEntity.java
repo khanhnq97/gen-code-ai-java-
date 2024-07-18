@@ -24,9 +24,9 @@ import jakarta.persistence.*;
 public class EmployeeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employee_id")
-    private String employeeId;
+    private Integer employeeId;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
@@ -43,13 +43,11 @@ public class EmployeeEntity {
     @Column(name = "password", length = 255)
     private String password;
 
-
-    // Getters and Setters
-    public String getId() {
+    public Integer getId() {
         return employeeId;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.employeeId = id;
     }
 

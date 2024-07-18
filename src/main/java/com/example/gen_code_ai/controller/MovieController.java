@@ -1,7 +1,7 @@
 package com.example.gen_code_ai.controller;
 
-import com.example.gen_code_ai.dto.Movie;
 import com.example.gen_code_ai.dto.MovieRequest;
+import com.example.gen_code_ai.dto.MovieResponse;
 import com.example.gen_code_ai.service.MovieService;
 import com.example.gen_code_ai.web.MoviesApi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,32 +22,32 @@ public class MovieController implements MoviesApi {
     }
 
     @Override
-    public ResponseEntity<List<Movie>> getMovies() {
-        List<Movie> movies = movieService.getAllMovies();
+    public ResponseEntity<List<MovieResponse>> getMovies() {
+        List<MovieResponse> movies = movieService.getAllMovies();
         return ResponseEntity.ok(movies);
     }
 
     @Override
-    public ResponseEntity<Movie> createMovie(MovieRequest movieRequest) {
-        Movie createdMovie = movieService.createMovie(movieRequest);
+    public ResponseEntity<MovieResponse> createMovie(MovieRequest movieRequest) {
+        MovieResponse createdMovie = movieService.createMovie(movieRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdMovie);
     }
 
     @Override
-    public ResponseEntity<Movie> getMovieById(String id) {
-        Movie movie = movieService.getMovieById(id);
+    public ResponseEntity<MovieResponse> getMovieById(Integer id) {
+        MovieResponse movie = movieService.getMovieById(id);
         return ResponseEntity.ok(movie);
     }
 
 
     @Override
-    public ResponseEntity<Movie> updateMovie(Movie movie) {
-        Movie updatedMovie = movieService.updateMovie(movie);
+    public ResponseEntity<MovieResponse> updateMovie(MovieRequest movie) {
+        MovieResponse updatedMovie = movieService.updateMovie(movie);
         return ResponseEntity.ok(updatedMovie);
     }
 
     @Override
-    public ResponseEntity<Void> deleteMovie(String id) {
+    public ResponseEntity<Void> deleteMovie(Integer id) {
         movieService.deleteMovie(id);
         return ResponseEntity.noContent().build();
     }
