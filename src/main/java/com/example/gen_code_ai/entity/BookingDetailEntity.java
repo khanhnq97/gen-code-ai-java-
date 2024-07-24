@@ -1,6 +1,13 @@
 package com.example.gen_code_ai.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "BookingDetails")
@@ -13,12 +20,11 @@ public class BookingDetailEntity {
 
     @ManyToOne
     @JoinColumn(name = "booking_id")
-    private BookingEntity booking;
+    private Booking booking;
 
     @ManyToOne
     @JoinColumn(name = "seat_id")
-    private SeatEntity seat;
-
+    private Seat seat;
 
     public Integer getBookingDetailId() {
         return bookingDetailId;
@@ -28,19 +34,19 @@ public class BookingDetailEntity {
         this.bookingDetailId = bookingDetailId;
     }
 
-    public BookingEntity getBooking() {
+    public Booking getBooking() {
         return booking;
     }
 
-    public void setBooking(BookingEntity booking) {
+    public void setBooking(Booking booking) {
         this.booking = booking;
     }
 
-    public SeatEntity getSeat() {
+    public Seat getSeat() {
         return seat;
     }
 
-    public void setSeat(SeatEntity seat) {
+    public void setSeat(Seat seat) {
         this.seat = seat;
     }
 

@@ -1,26 +1,18 @@
 package com.example.gen_code_ai.dto;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+
+import java.util.Objects;
 
 /**
  * UpdateShowtime409Response
  */
 
 @JsonTypeName("updateShowtime_409_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-19T00:56:02.813115+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-23T11:54:56.445739+07:00[Asia/Ho_Chi_Minh]")
 public class UpdateShowtime409Response {
 
   private String message;

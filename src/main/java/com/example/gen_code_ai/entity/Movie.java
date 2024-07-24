@@ -1,17 +1,22 @@
 package com.example.gen_code_ai.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Movies")
-public class MovieEntity {
+@Table(name = "movies")
+public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "movie_id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -23,7 +28,7 @@ public class MovieEntity {
     private Integer duration;
 
     @Column(name = "release_date")
-    private OffsetDateTime releaseDate;
+    private LocalDateTime releaseDate;
 
     @Column(name = "genre")
     private String genre;
@@ -34,11 +39,22 @@ public class MovieEntity {
     @Column(name = "cast")
     private String cast;
 
-    public Integer getId() {
+    @Column(nullable = false)
+    private BigDecimal standardPrice;
+
+    public BigDecimal getDefaultStandardPrice() {
+        return standardPrice;
+    }
+
+    public void setDefaultStandardPrice(BigDecimal standardPrice) {
+        this.standardPrice = standardPrice;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -66,11 +82,11 @@ public class MovieEntity {
         this.duration = duration;
     }
 
-    public OffsetDateTime getReleaseDate() {
+    public LocalDateTime getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(OffsetDateTime releaseDate) {
+    public void setReleaseDate(LocalDateTime releaseDate) {
         this.releaseDate = releaseDate;
     }
 

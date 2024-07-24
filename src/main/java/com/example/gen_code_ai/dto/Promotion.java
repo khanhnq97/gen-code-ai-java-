@@ -1,30 +1,24 @@
 package com.example.gen_code_ai.dto;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
-import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
-import jakarta.annotation.Generated;
+import java.util.Objects;
 
 /**
  * Promotion
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-19T00:56:02.813115+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-23T11:54:56.445739+07:00[Asia/Ho_Chi_Minh]")
 public class Promotion {
 
-  private Integer promotionId;
+  private Long promotionId;
 
   private String name;
 
@@ -40,7 +34,7 @@ public class Promotion {
 
   /**
    * Default constructor
-   * @deprecated Use {@link Promotion#Promotion(Integer, String, String, BigDecimal, OffsetDateTime, OffsetDateTime)}
+   * @deprecated Use {@link Promotion#Promotion(Long, String, String, BigDecimal, OffsetDateTime, OffsetDateTime)}
    */
   @Deprecated
   public Promotion() {
@@ -50,7 +44,7 @@ public class Promotion {
   /**
    * Constructor with only required parameters
    */
-  public Promotion(Integer promotionId, String name, String description, BigDecimal discountPercent, OffsetDateTime startDate, OffsetDateTime endDate) {
+  public Promotion(Long promotionId, String name, String description, BigDecimal discountPercent, OffsetDateTime startDate, OffsetDateTime endDate) {
     this.promotionId = promotionId;
     this.name = name;
     this.description = description;
@@ -59,7 +53,7 @@ public class Promotion {
     this.endDate = endDate;
   }
 
-  public Promotion promotionId(Integer promotionId) {
+  public Promotion promotionId(Long promotionId) {
     this.promotionId = promotionId;
     return this;
   }
@@ -71,11 +65,11 @@ public class Promotion {
   @NotNull 
   @Schema(name = "promotionId", example = "1", description = "Unique identifier for the promotion", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("promotionId")
-  public Integer getPromotionId() {
+  public Long getPromotionId() {
     return promotionId;
   }
 
-  public void setPromotionId(Integer promotionId) {
+  public void setPromotionId(Long promotionId) {
     this.promotionId = promotionId;
   }
 

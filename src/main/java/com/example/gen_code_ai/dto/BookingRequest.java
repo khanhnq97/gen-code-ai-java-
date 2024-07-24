@@ -1,43 +1,56 @@
 package com.example.gen_code_ai.dto;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import java.time.OffsetDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import org.openapitools.jackson.nullable.JsonNullable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * BookingRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-19T00:56:02.813115+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-23T11:54:56.445739+07:00[Asia/Ho_Chi_Minh]")
 public class BookingRequest {
 
-  private Integer bookingId;
+  private JsonNullable<Long> bookingId = JsonNullable.undefined();
 
-  private Integer customerId;
+  private Long customerId;
 
-  private Integer showtimeId;
+  private Long showtimeId;
 
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime bookingDate;
+  private Long theaterId;
 
-  private Double totalAmount;
+  @Valid
+  private List<Long> seatIds = new ArrayList<>();
 
-  private Double ticketPrice;
+  /**
+   * Default constructor
+   * @deprecated Use {@link BookingRequest#BookingRequest(Long, Long, Long, List<Long>)}
+   */
+  @Deprecated
+  public BookingRequest() {
+    super();
+  }
 
-  public BookingRequest bookingId(Integer bookingId) {
-    this.bookingId = bookingId;
+  /**
+   * Constructor with only required parameters
+   */
+  public BookingRequest(Long customerId, Long showtimeId, Long theaterId, List<Long> seatIds) {
+    this.customerId = customerId;
+    this.showtimeId = showtimeId;
+    this.theaterId = theaterId;
+    this.seatIds = seatIds;
+  }
+
+  public BookingRequest bookingId(Long bookingId) {
+    this.bookingId = JsonNullable.of(bookingId);
     return this;
   }
 
@@ -48,15 +61,15 @@ public class BookingRequest {
   
   @Schema(name = "bookingId", description = "Unique identifier for the booking", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("bookingId")
-  public Integer getBookingId() {
+  public JsonNullable<Long> getBookingId() {
     return bookingId;
   }
 
-  public void setBookingId(Integer bookingId) {
+  public void setBookingId(JsonNullable<Long> bookingId) {
     this.bookingId = bookingId;
   }
 
-  public BookingRequest customerId(Integer customerId) {
+  public BookingRequest customerId(Long customerId) {
     this.customerId = customerId;
     return this;
   }
@@ -65,18 +78,18 @@ public class BookingRequest {
    * ID of the customer who made the booking
    * @return customerId
   */
-  
-  @Schema(name = "customerId", description = "ID of the customer who made the booking", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @NotNull 
+  @Schema(name = "customerId", description = "ID of the customer who made the booking", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("customerId")
-  public Integer getCustomerId() {
+  public Long getCustomerId() {
     return customerId;
   }
 
-  public void setCustomerId(Integer customerId) {
+  public void setCustomerId(Long customerId) {
     this.customerId = customerId;
   }
 
-  public BookingRequest showtimeId(Integer showtimeId) {
+  public BookingRequest showtimeId(Long showtimeId) {
     this.showtimeId = showtimeId;
     return this;
   }
@@ -85,75 +98,63 @@ public class BookingRequest {
    * ID of the showtime associated with the booking
    * @return showtimeId
   */
-  
-  @Schema(name = "showtimeId", description = "ID of the showtime associated with the booking", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @NotNull 
+  @Schema(name = "showtimeId", description = "ID of the showtime associated with the booking", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("showtimeId")
-  public Integer getShowtimeId() {
+  public Long getShowtimeId() {
     return showtimeId;
   }
 
-  public void setShowtimeId(Integer showtimeId) {
+  public void setShowtimeId(Long showtimeId) {
     this.showtimeId = showtimeId;
   }
 
-  public BookingRequest bookingDate(OffsetDateTime bookingDate) {
-    this.bookingDate = bookingDate;
+  public BookingRequest theaterId(Long theaterId) {
+    this.theaterId = theaterId;
     return this;
   }
 
   /**
-   * Date and time the booking was made
-   * @return bookingDate
+   * ID of the theater where the showtime is taking place
+   * @return theaterId
   */
-  @Valid 
-  @Schema(name = "bookingDate", description = "Date and time the booking was made", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("bookingDate")
-  public OffsetDateTime getBookingDate() {
-    return bookingDate;
+  @NotNull 
+  @Schema(name = "theaterId", description = "ID of the theater where the showtime is taking place", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("theaterId")
+  public Long getTheaterId() {
+    return theaterId;
   }
 
-  public void setBookingDate(OffsetDateTime bookingDate) {
-    this.bookingDate = bookingDate;
+  public void setTheaterId(Long theaterId) {
+    this.theaterId = theaterId;
   }
 
-  public BookingRequest totalAmount(Double totalAmount) {
-    this.totalAmount = totalAmount;
+  public BookingRequest seatIds(List<Long> seatIds) {
+    this.seatIds = seatIds;
+    return this;
+  }
+
+  public BookingRequest addSeatIdsItem(Long seatIdsItem) {
+    if (this.seatIds == null) {
+      this.seatIds = new ArrayList<>();
+    }
+    this.seatIds.add(seatIdsItem);
     return this;
   }
 
   /**
-   * Total amount paid for the booking
-   * @return totalAmount
+   * Get seatIds
+   * @return seatIds
   */
-  
-  @Schema(name = "totalAmount", description = "Total amount paid for the booking", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("totalAmount")
-  public Double getTotalAmount() {
-    return totalAmount;
+  @NotNull 
+  @Schema(name = "seatIds", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("seatIds")
+  public List<Long> getSeatIds() {
+    return seatIds;
   }
 
-  public void setTotalAmount(Double totalAmount) {
-    this.totalAmount = totalAmount;
-  }
-
-  public BookingRequest ticketPrice(Double ticketPrice) {
-    this.ticketPrice = ticketPrice;
-    return this;
-  }
-
-  /**
-   * Ticket price for the showtime
-   * @return ticketPrice
-  */
-  
-  @Schema(name = "ticketPrice", description = "Ticket price for the showtime", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("ticketPrice")
-  public Double getTicketPrice() {
-    return ticketPrice;
-  }
-
-  public void setTicketPrice(Double ticketPrice) {
-    this.ticketPrice = ticketPrice;
+  public void setSeatIds(List<Long> seatIds) {
+    this.seatIds = seatIds;
   }
 
   @Override
@@ -165,17 +166,27 @@ public class BookingRequest {
       return false;
     }
     BookingRequest bookingRequest = (BookingRequest) o;
-    return Objects.equals(this.bookingId, bookingRequest.bookingId) &&
+    return equalsNullable(this.bookingId, bookingRequest.bookingId) &&
         Objects.equals(this.customerId, bookingRequest.customerId) &&
         Objects.equals(this.showtimeId, bookingRequest.showtimeId) &&
-        Objects.equals(this.bookingDate, bookingRequest.bookingDate) &&
-        Objects.equals(this.totalAmount, bookingRequest.totalAmount) &&
-        Objects.equals(this.ticketPrice, bookingRequest.ticketPrice);
+        Objects.equals(this.theaterId, bookingRequest.theaterId) &&
+        Objects.equals(this.seatIds, bookingRequest.seatIds);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(bookingId, customerId, showtimeId, bookingDate, totalAmount, ticketPrice);
+    return Objects.hash(hashCodeNullable(bookingId), customerId, showtimeId, theaterId, seatIds);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -185,9 +196,8 @@ public class BookingRequest {
     sb.append("    bookingId: ").append(toIndentedString(bookingId)).append("\n");
     sb.append("    customerId: ").append(toIndentedString(customerId)).append("\n");
     sb.append("    showtimeId: ").append(toIndentedString(showtimeId)).append("\n");
-    sb.append("    bookingDate: ").append(toIndentedString(bookingDate)).append("\n");
-    sb.append("    totalAmount: ").append(toIndentedString(totalAmount)).append("\n");
-    sb.append("    ticketPrice: ").append(toIndentedString(ticketPrice)).append("\n");
+    sb.append("    theaterId: ").append(toIndentedString(theaterId)).append("\n");
+    sb.append("    seatIds: ").append(toIndentedString(seatIds)).append("\n");
     sb.append("}");
     return sb.toString();
   }

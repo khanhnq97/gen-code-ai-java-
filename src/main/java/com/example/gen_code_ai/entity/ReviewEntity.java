@@ -1,6 +1,14 @@
 package com.example.gen_code_ai.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 import java.util.Date;
 
@@ -13,11 +21,11 @@ public class ReviewEntity {
 
     @ManyToOne
     @JoinColumn(name = "movie_id")
-    private MovieEntity  movie;
+    private Movie movie;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private CustomerEntity customer;
+    private Customer customer;
 
     private Integer rating;
 
@@ -34,19 +42,19 @@ public class ReviewEntity {
         this.reviewId = reviewId;
     }
 
-    public MovieEntity getMovie() {
+    public Movie getMovie() {
         return movie;
     }
 
-    public void setMovie(MovieEntity movie) {
+    public void setMovie(Movie movie) {
         this.movie = movie;
     }
 
-    public CustomerEntity getCustomer() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(CustomerEntity customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
@@ -76,13 +84,6 @@ public class ReviewEntity {
 
     @Override
     public String toString() {
-        return "ReviewEntity{" +
-                "reviewId=" + reviewId +
-                ", movie=" + movie +
-                ", customer=" + customer +
-                ", rating=" + rating +
-                ", comment='" + comment + '\'' +
-                ", reviewDate=" + reviewDate +
-                '}';
+        return "ReviewEntity{" + "reviewId=" + reviewId + ", movie=" + movie + ", customer=" + customer + ", rating=" + rating + ", comment='" + comment + '\'' + ", reviewDate=" + reviewDate + '}';
     }
 }

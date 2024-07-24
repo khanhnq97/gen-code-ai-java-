@@ -11,177 +11,265 @@ package com.example.gen_code_ai.service;
 
 import com.example.gen_code_ai.dto.BookingRequest;
 import com.example.gen_code_ai.dto.BookingResponse;
-import com.example.gen_code_ai.entity.BookingEntity;
-import com.example.gen_code_ai.entity.CustomerEntity;
-import com.example.gen_code_ai.entity.ShowtimeEntity;
-import com.example.gen_code_ai.exception.*;
+import com.example.gen_code_ai.entity.Booking;
+import com.example.gen_code_ai.entity.Customer;
+import com.example.gen_code_ai.entity.Showtime;
+import com.example.gen_code_ai.entity.Theater;
+import com.example.gen_code_ai.exception.BookingNotFoundException;
+import com.example.gen_code_ai.exception.CustomerNotFoundException;
+import com.example.gen_code_ai.exception.InsufficientTicketsAvailableException;
+import com.example.gen_code_ai.exception.MovieNotFoundException;
+import com.example.gen_code_ai.exception.ResourceNotFoundException;
+import com.example.gen_code_ai.exception.ShowtimeNotFoundException;
+import com.example.gen_code_ai.exception.TheaterNotFoundException;
 import com.example.gen_code_ai.repository.BookingRepository;
 import com.example.gen_code_ai.repository.CustomerRepository;
 import com.example.gen_code_ai.repository.MovieRepository;
+import com.example.gen_code_ai.repository.SeatRepository;
 import com.example.gen_code_ai.repository.ShowtimeRepository;
+import com.example.gen_code_ai.repository.TheaterRepository;
+import com.example.gen_code_ai.utils.BookingUtil;
+import com.example.gen_code_ai.utils.DateTimeUtil;
+import com.example.gen_code_ai.utils.NumberUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.OffsetDateTime;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.example.gen_code_ai.utils.ConvertDataUtil.convertToCustomerResponse;
+import static com.example.gen_code_ai.utils.ConvertDataUtil.convertToMovieResponse;
+import static com.example.gen_code_ai.utils.ConvertDataUtil.convertToShowtimeResponse;
+import static com.example.gen_code_ai.utils.ConvertDataUtil.convertToTheaterResponse;
 
 @Service
 public class BookingService {
 
-    @Autowired
-    private BookingRepository bookingRepository;
+  @Autowired private BookingRepository bookingRepository;
 
-    @Autowired
-    private ShowtimeRepository showtimeRepository;
+  @Autowired private ShowtimeRepository showtimeRepository;
 
-    @Autowired
-    private CustomerRepository customerRepository;
+  @Autowired private CustomerRepository customerRepository;
 
-    @Autowired
-    private MovieRepository movieRepository;
+  @Autowired private MovieRepository movieRepository;
 
-    public List<BookingResponse> getAllBookings() {
-        List<BookingEntity> bookings = bookingRepository.findAll();
-        return bookings.stream().map(this::convertToBookingResponse).collect(Collectors.toList());
+  @Autowired private TheaterRepository theatersRepository;
+
+  @Autowired private SeatRepository seatRepository;
+
+  public List<BookingResponse> getAllBookings() {
+    List<Booking> bookings = bookingRepository.findAll();
+    return bookings.stream().map(this::convertToBookingResponse).collect(Collectors.toList());
+  }
+
+  @Transactional
+  public BookingResponse createBooking(BookingRequest request)
+      throws CustomerNotFoundException,
+          ShowtimeNotFoundException,
+          InsufficientTicketsAvailableException {
+    // Retrieve existing entities based on the request
+    var customerId = request.getCustomerId();
+    Customer customer =
+        customerRepository
+            .findById(customerId)
+            .orElseThrow(
+                () -> new CustomerNotFoundException("Customer not found with id: " + customerId));
+
+    var showtimeId = request.getShowtimeId();
+    Showtime showtime =
+        showtimeRepository
+            .findById(showtimeId)
+            .orElseThrow(
+                () -> new ShowtimeNotFoundException("Showtime not found with id: " + showtimeId));
+
+    var theaterId = showtime.getTheater().getId();
+    Theater theater =
+        theatersRepository
+            .findById(theaterId)
+            .orElseThrow(
+                () -> new TheaterNotFoundException("Theater not found with id: " + theaterId));
+
+    var movieId = showtime.getMovie().getId();
+    var movie =
+        movieRepository
+            .findById(movieId)
+            .orElseThrow(() -> new MovieNotFoundException("Movie not found with id: " + movieId));
+
+    var seats = seatRepository.findAllById(request.getSeatIds());
+    if (seats.size() != request.getSeatIds().size()) {
+      throw new ResourceNotFoundException("One or more seats not found");
     }
 
-    @Transactional
-    public BookingResponse createBooking(BookingRequest bookingRequest) {
-        ShowtimeEntity existingShowtime = showtimeRepository.findById(bookingRequest.getShowtimeId()).orElseThrow(() -> new ShowtimeNotFoundException("Showtime not found"));
-        CustomerEntity existingCustomer = customerRepository.findById(bookingRequest.getCustomerId()).orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
-        int requestedSeats = getNumberOfTicketsFromBookingRequest(bookingRequest);
+    // check if seats are available
+    //        if (!isSeatsAvailable(showtime, seats)) {
+    //            throw new InsufficientTicketsAvailableException("Not enough seats available");
+    //        }
 
-        // Check if there are available seats
-        if (!isSeatsAvailable(existingShowtime, requestedSeats)) {
-            throw new InsufficientTicketsAvailableException("Not enough seats available");
-        }
+    // Calculate the number of requested seats
+    // int requestedSeats = calculateRequestedSeats(request);
 
-        BookingEntity booking = new BookingEntity();
-        booking.setShowtime(existingShowtime);
-        booking.setBookingDate(OffsetDateTime.now());
-        booking.setTotalAmount(bookingRequest.getTotalAmount());
-        booking.setCustomer(existingCustomer);
+    // Check seat availability
+    //        if (!isSeatsAvailable(showtime, requestedSeats)) {
+    //            throw new InsufficientTicketsAvailableException("Not enough seats available");
+    //        }
 
-        BookingEntity savedBooking = bookingRepository.save(booking);
-        return convertToBookingResponse(savedBooking);
+    // Check if seats are available
+    // Calculate total amount
+    BigDecimal totalAmount = BookingUtil.calculateTotalAmount(seats, showtime);
+    if (totalAmount.compareTo(BigDecimal.ZERO) <= 0) {
+      throw new InsufficientTicketsAvailableException("Not enough tickets available");
     }
 
-    public BookingResponse getBookingById(Integer id) throws BookingNotFoundException {
-        BookingEntity booking = bookingRepository.findById(id).orElseThrow(() -> new BookingNotFoundException("Booking not found with id: " + id));
-        return convertToBookingResponse(booking);
-    }
+    // Create and save booking entity
+    Booking booking = createNewBooking(request, customer, showtime, totalAmount);
+    Booking savedBooking = bookingRepository.save(booking);
 
-    @Transactional
-    public BookingResponse updateBooking(BookingRequest bookingRequest) throws BookingNotFoundException, BookingAlreadyExistsException, InsufficientTicketsAvailableException {
-        BookingEntity existingBooking = bookingRepository.findById(bookingRequest.getBookingId()).orElseThrow(() -> new BookingNotFoundException("Booking not found with id: " + bookingRequest.getBookingId()));
+    return convertToBookingResponse(savedBooking);
+  }
 
-        ShowtimeEntity showtime = showtimeRepository.findById(bookingRequest.getShowtimeId()).orElseThrow(() -> new ShowtimeNotFoundException("Showtime not found"));
+  public BookingResponse getBookingById(Long id) throws BookingNotFoundException {
+    Booking booking =
+        bookingRepository
+            .findById(id)
+            .orElseThrow(() -> new BookingNotFoundException("Booking not found with id: " + id));
+    return convertToBookingResponse(booking);
+  }
 
-        int requestedSeats = getNumberOfTicketsFromBookingRequest(bookingRequest);
-        int existingAvailableSeats = getNumberOfTicketsExisting(existingBooking.getBookingId());
+  //
+  //    @Transactional
+  //    public BookingResponse updateBooking(BookingRequest bookingRequest) throws
+  // BookingNotFoundException, BookingAlreadyExistsException, InsufficientTicketsAvailableException
+  // {
+  //        Booking existingBooking =
+  // bookingRepository.findById(bookingRequest.getBookingId()).orElseThrow(() -> new
+  // BookingNotFoundException("Booking not found with id: " + bookingRequest.getBookingId()));
+  //
+  //        ShowtimeEntity showtime =
+  // showtimeRepository.findById(bookingRequest.getShowtimeId()).orElseThrow(() -> new
+  // ShowtimeNotFoundException("Showtime not found with id: " + bookingRequest.getShowtimeId()));
+  //
+  //        int requestedSeats = calculateRequestedSeats(bookingRequest);
+  //        int existingAvailableSeats = getNumberOfTicketsExisting(existingBooking.getId());
+  //
+  //        // Check if there are available seats for the new number of tickets
+  //        int seatDifference = requestedSeats - existingAvailableSeats;
+  //        if (seatDifference > 0 && !isSeatsAvailable(showtime, seatDifference)) {
+  //            throw new InsufficientTicketsAvailableException("Not enough seats available");
+  //        }
+  //
+  //        existingBooking.setShowtime(showtime);
+  //        existingBooking.setBookingDate(OffsetDateTime.now());
+  //        //todo:Need to update correct booking totalAmount
+  //        existingBooking.setTotalAmount(0);
+  //
+  //        Booking updatedBooking = bookingRepository.save(existingBooking);
+  //        return convertToBookingResponse(updatedBooking);
+  //    }
 
-        // Check if there are available seats for the new number of tickets
-        int seatDifference = requestedSeats - existingAvailableSeats;
-        if (seatDifference > 0 && !isSeatsAvailable(showtime, seatDifference)) {
-            throw new InsufficientTicketsAvailableException("Not enough seats available");
-        }
+  //    @Transactional
+  //    public void cancelBooking(Integer id) {
+  //        Booking booking = bookingRepository.findById(id).orElseThrow(() -> new
+  // BookingNotFoundException("Booking not found with id: " + id));
+  //
+  //        // You might want to add some business logic here,
+  //        // e.g., check if the booking is eligible for cancellation based on the showtime
+  //
+  //        bookingRepository.delete(booking);
+  //    }
 
-        existingBooking.setShowtime(showtime);
-        existingBooking.setBookingDate(OffsetDateTime.now());
-        //todo:Need to update correct booking totalAmount
-        existingBooking.setTotalAmount(0);
+  private boolean isSeatsAvailable(Showtime showtime, int requestedSeats) {
+    int bookedSeats = bookingRepository.countBookedSeatsByShowtime(showtime);
+    return (showtime.getTheater().getCapacity() - bookedSeats) >= requestedSeats;
+  }
 
-        BookingEntity updatedBooking = bookingRepository.save(existingBooking);
-        return convertToBookingResponse(updatedBooking);
-    }
+  // convert booking entity to booking response
 
-    @Transactional
-    public void cancelBooking(Integer id) {
-        BookingEntity booking = bookingRepository.findById(id).orElseThrow(() -> new BookingNotFoundException("Booking not found with id: " + id));
+  // convert booking request to booking entity
+  //    private BookingEntity convertToBookingEntity(BookingRequest bookingRequest) {
+  //        BookingEntity booking = new BookingEntity();
+  //        booking.setCustomer(bookingRequest.getCustomerId());
+  //        booking.setShowtime(bookingRequest.getShowtimeId());
+  //        booking.setBookingDate(bookingRequest.getBookingDate());
+  //        booking.setTotalAmount(bookingRequest.getTotalAmount());
+  //        return booking;
+  //    }
 
-        // You might want to add some business logic here,
-        // e.g., check if the booking is eligible for cancellation based on the showtime
+  // update booking entity
+  //    private void updateBookingEntity(BookingEntity booking, BookingRequest bookingRequest) {
+  //        booking.setCustomer(bookingRequest.getCustomerId());
+  //        booking.setShowtime(bookingRequest.getShowtimeId());
+  //        booking.setBookingDate(bookingRequest.getBookingDate());
+  //        booking.setTotalAmount(bookingRequest.getTotalAmount());
+  //    }
 
-        bookingRepository.delete(booking);
-    }
+  // showtime.getAvailableTickets
+  private int getAvailableTickets(Showtime showtime) {
+    return showtime.getTheater().getCapacity()
+        - bookingRepository.countBookedSeatsByShowtime(showtime);
+  }
 
-    private boolean isSeatsAvailable(ShowtimeEntity showtime, int requestedSeats) {
-        int bookedSeats = bookingRepository.countBookedSeatsByShowtime(showtime);
-        return (showtime.getTheater().getCapacity() - bookedSeats) >= requestedSeats;
-    }
+  ////////////////////////////
 
-    // convert booking entity to booking response
-    private BookingResponse convertToBookingResponse(BookingEntity booking) {
-        BookingResponse bookingResponse = new BookingResponse();
-        bookingResponse.setBookingId(booking.getBookingId());
-        bookingResponse.setCustomerId(booking.getCustomer().getCustomerId());
-        bookingResponse.setShowtimeId(booking.getShowtime().getShowtimeId());
-        bookingResponse.setBookingDate(booking.getBookingDate());
-        bookingResponse.setTotalAmount(booking.getTotalAmount());
-        // bookingResponse.setNumberOfTickets(calculateNumberOfTickets(booking));
-        return bookingResponse;
-    }
+  /*Giải thích:
 
-    // convert booking request to booking entity
-//    private BookingEntity convertToBookingEntity(BookingRequest bookingRequest) {
-//        BookingEntity booking = new BookingEntity();
-//        booking.setCustomer(bookingRequest.getCustomerId());
-//        booking.setShowtime(bookingRequest.getShowtimeId());
-//        booking.setBookingDate(bookingRequest.getBookingDate());
-//        booking.setTotalAmount(bookingRequest.getTotalAmount());
-//        return booking;
-//    }
+  Phương thức getNumberOfTickets nhận vào một bookingId.
+  Nó tìm kiếm booking tương ứng trong cơ sở dữ liệu. Nếu không tìm thấy, nó sẽ ném ra một BookingNotFoundException.
+  Sau khi tìm thấy booking, nó gọi phương thức private calculateNumberOfTickets để tính toán số lượng vé.
+  Phương thức calculateNumberOfTickets tính toán số lượng vé bằng cách chia tổng số tiền cho giá mỗi vé. Chúng ta sử dụng divideToIntegralValue để đảm bảo kết quả là một số nguyên.
 
-    // update booking entity
-//    private void updateBookingEntity(BookingEntity booking, BookingRequest bookingRequest) {
-//        booking.setCustomer(bookingRequest.getCustomerId());
-//        booking.setShowtime(bookingRequest.getShowtimeId());
-//        booking.setBookingDate(bookingRequest.getBookingDate());
-//        booking.setTotalAmount(bookingRequest.getTotalAmount());
-//    }
+  Lưu ý rằng cách tính này giả định rằng tổng số tiền luôn là bội số chính xác của giá mỗi vé. Trong thực tế, bạn có thể cần xử lý các trường hợp đặc biệt hoặc làm tròn số.*/
 
+  public int getNumberOfTicketsExisting(Long bookingId) throws BookingNotFoundException {
+    Booking booking =
+        bookingRepository
+            .findById(bookingId)
+            .orElseThrow(
+                () -> new BookingNotFoundException("Booking not found with id: " + bookingId));
 
-    // showtime.getAvailableTickets
-    private int getAvailableTickets(ShowtimeEntity showtime) {
-        return showtime.getTheater().getCapacity() - bookingRepository.countBookedSeatsByShowtime(showtime);
-    }
+    return calculateNumberOfTickets(booking);
+  }
 
+  // todo:Need update real logic
+  private int calculateNumberOfTickets(Booking booking) {
+    // Giả sử số lượng vé được tính bằng cách chia tổng số tiền cho giá mỗi vé
+    // BigDecimal pricePerTicket = booking.getShowtimeId().getPrice();
+    // return booking.getTotalAmount().divideToIntegralValue(pricePerTicket).intValue();
+    return 0;
+  }
 
-    ////////////////////////////
+  ////////////////////////////
 
-    /*Giải thích:
+  //
+  //    // getNumberOfTickets from booking request
+  //    public Integer calculateRequestedSeats(BookingRequest request) {
+  //        double totalAmount = request.getTotalAmount();
+  //        double ticketPrice = request.getTicketPrice();
+  //        return (int) (totalAmount / ticketPrice);
+  //    }
 
-    Phương thức getNumberOfTickets nhận vào một bookingId.
-    Nó tìm kiếm booking tương ứng trong cơ sở dữ liệu. Nếu không tìm thấy, nó sẽ ném ra một BookingNotFoundException.
-    Sau khi tìm thấy booking, nó gọi phương thức private calculateNumberOfTickets để tính toán số lượng vé.
-    Phương thức calculateNumberOfTickets tính toán số lượng vé bằng cách chia tổng số tiền cho giá mỗi vé. Chúng ta sử dụng divideToIntegralValue để đảm bảo kết quả là một số nguyên.
+  // createNewBooking
+  public Booking createNewBooking(BookingRequest request, Customer customer, Showtime showtime,BigDecimal totalAmount) {
+    Booking booking = new Booking();
+    booking.setCustomer(customer);
+    booking.setShowtime(showtime);
+    booking.setTotalAmount(totalAmount);
+    booking.setBookingDate(LocalDateTime.now());
+    bookingRepository.save(booking);
+    return booking;
+  }
 
-    Lưu ý rằng cách tính này giả định rằng tổng số tiền luôn là bội số chính xác của giá mỗi vé. Trong thực tế, bạn có thể cần xử lý các trường hợp đặc biệt hoặc làm tròn số.*/
-
-    public int getNumberOfTicketsExisting(Integer bookingId) throws BookingNotFoundException {
-        BookingEntity booking = bookingRepository.findById(bookingId).orElseThrow(() -> new BookingNotFoundException("Booking not found with id: " + bookingId));
-
-        return calculateNumberOfTickets(booking);
-    }
-
-
-    //todo:Need update real logic
-    private int calculateNumberOfTickets(BookingEntity booking) {
-        // Giả sử số lượng vé được tính bằng cách chia tổng số tiền cho giá mỗi vé
-        // BigDecimal pricePerTicket = booking.getShowtimeId().getPrice();
-        //return booking.getTotalAmount().divideToIntegralValue(pricePerTicket).intValue();
-        return 0;
-    }
-
-    ////////////////////////////
-
-
-    // getNumberOfTickets from booking request
-    public Integer getNumberOfTicketsFromBookingRequest(BookingRequest bookingRequest) {
-        double totalAmount = bookingRequest.getTotalAmount();
-        double ticketPrice = bookingRequest.getTicketPrice();
-        return (int) (totalAmount / ticketPrice);
-    }
+  public BookingResponse convertToBookingResponse(Booking booking) {
+    BookingResponse bookingResponse = new BookingResponse();
+    bookingResponse.setBookingId(booking.getId());
+    bookingResponse.setCustomer(convertToCustomerResponse(booking.getCustomer()));
+    bookingResponse.setShowtime(convertToShowtimeResponse(booking.getShowtime()));
+    bookingResponse.setTheater(convertToTheaterResponse(booking.getShowtime().getTheater()));
+    bookingResponse.setMovie(convertToMovieResponse(booking.getShowtime().getMovie()));
+    bookingResponse.setBookingDate(DateTimeUtil.convertToOffsetDateTime(booking.getBookingDate()));
+    bookingResponse.setTotalAmount(NumberUtil.convertToDouble(booking.getTotalAmount()));
+    return bookingResponse;
+  }
 }

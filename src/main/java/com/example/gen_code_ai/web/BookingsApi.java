@@ -11,33 +11,30 @@ import com.example.gen_code_ai.dto.UpdateBooking404Response;
 import com.example.gen_code_ai.dto.UpdateBooking409Response;
 import com.example.gen_code_ai.dto.UpdateBooking422Response;
 import com.example.gen_code_ai.dto.UpdateMovie500Response;
-import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-19T00:56:02.813115+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-23T11:54:56.445739+07:00[Asia/Ho_Chi_Minh]")
 @Validated
 @Tag(name = "Bookings", description = "the Bookings API")
 public interface BookingsApi {
@@ -74,7 +71,7 @@ public interface BookingsApi {
         produces = { "application/json" }
     )
     default ResponseEntity<Void> cancelBooking(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
+        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -109,7 +106,7 @@ public interface BookingsApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"totalAmount\" : 5.962133916683182, \"ticketPrice\" : 5.637376656633329, \"customerId\" : 6, \"showtimeId\" : 1, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"movieId\" : 2, \"bookingId\" : 0 }";
+                    String exampleString = "{ \"totalAmount\" : 5.637376656633329, \"movie\" : { \"duration\" : 6, \"cast\" : \"cast\", \"releaseDate\" : \"2000-01-23T04:56:07.000+00:00\", \"director\" : \"director\", \"genre\" : \"genre\", \"description\" : \"description\", \"movieId\" : 0, \"title\" : \"title\" }, \"ticketPrice\" : 2.3021358869347655, \"showtime\" : { \"theaterId\" : 1, \"price\" : 5.962133916683182, \"showtimeId\" : 0, \"movieId\" : 6, \"startTime\" : \"2000-01-23T04:56:07.000+00:00\", \"endTime\" : \"2000-01-23T04:56:07.000+00:00\" }, \"theater\" : { \"theaterId\" : 1, \"name\" : \"name\", \"capacity\" : 5 }, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"bookingId\" : 0, \"customer\" : { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 6, \"name\" : \"name\", \"avatar\" : \"avatar\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -146,12 +143,12 @@ public interface BookingsApi {
         produces = { "application/json" }
     )
     default ResponseEntity<BookingResponse> getBookingById(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
+        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"totalAmount\" : 5.962133916683182, \"ticketPrice\" : 5.637376656633329, \"customerId\" : 6, \"showtimeId\" : 1, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"movieId\" : 2, \"bookingId\" : 0 }";
+                    String exampleString = "{ \"totalAmount\" : 5.637376656633329, \"movie\" : { \"duration\" : 6, \"cast\" : \"cast\", \"releaseDate\" : \"2000-01-23T04:56:07.000+00:00\", \"director\" : \"director\", \"genre\" : \"genre\", \"description\" : \"description\", \"movieId\" : 0, \"title\" : \"title\" }, \"ticketPrice\" : 2.3021358869347655, \"showtime\" : { \"theaterId\" : 1, \"price\" : 5.962133916683182, \"showtimeId\" : 0, \"movieId\" : 6, \"startTime\" : \"2000-01-23T04:56:07.000+00:00\", \"endTime\" : \"2000-01-23T04:56:07.000+00:00\" }, \"theater\" : { \"theaterId\" : 1, \"name\" : \"name\", \"capacity\" : 5 }, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"bookingId\" : 0, \"customer\" : { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 6, \"name\" : \"name\", \"avatar\" : \"avatar\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -188,7 +185,7 @@ public interface BookingsApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"totalAmount\" : 5.962133916683182, \"ticketPrice\" : 5.637376656633329, \"customerId\" : 6, \"showtimeId\" : 1, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"movieId\" : 2, \"bookingId\" : 0 }, { \"totalAmount\" : 5.962133916683182, \"ticketPrice\" : 5.637376656633329, \"customerId\" : 6, \"showtimeId\" : 1, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"movieId\" : 2, \"bookingId\" : 0 } ]";
+                    String exampleString = "[ { \"totalAmount\" : 5.637376656633329, \"movie\" : { \"duration\" : 6, \"cast\" : \"cast\", \"releaseDate\" : \"2000-01-23T04:56:07.000+00:00\", \"director\" : \"director\", \"genre\" : \"genre\", \"description\" : \"description\", \"movieId\" : 0, \"title\" : \"title\" }, \"ticketPrice\" : 2.3021358869347655, \"showtime\" : { \"theaterId\" : 1, \"price\" : 5.962133916683182, \"showtimeId\" : 0, \"movieId\" : 6, \"startTime\" : \"2000-01-23T04:56:07.000+00:00\", \"endTime\" : \"2000-01-23T04:56:07.000+00:00\" }, \"theater\" : { \"theaterId\" : 1, \"name\" : \"name\", \"capacity\" : 5 }, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"bookingId\" : 0, \"customer\" : { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 6, \"name\" : \"name\", \"avatar\" : \"avatar\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" } }, { \"totalAmount\" : 5.637376656633329, \"movie\" : { \"duration\" : 6, \"cast\" : \"cast\", \"releaseDate\" : \"2000-01-23T04:56:07.000+00:00\", \"director\" : \"director\", \"genre\" : \"genre\", \"description\" : \"description\", \"movieId\" : 0, \"title\" : \"title\" }, \"ticketPrice\" : 2.3021358869347655, \"showtime\" : { \"theaterId\" : 1, \"price\" : 5.962133916683182, \"showtimeId\" : 0, \"movieId\" : 6, \"startTime\" : \"2000-01-23T04:56:07.000+00:00\", \"endTime\" : \"2000-01-23T04:56:07.000+00:00\" }, \"theater\" : { \"theaterId\" : 1, \"name\" : \"name\", \"capacity\" : 5 }, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"bookingId\" : 0, \"customer\" : { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 6, \"name\" : \"name\", \"avatar\" : \"avatar\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" } } ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -243,7 +240,7 @@ public interface BookingsApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"totalAmount\" : 5.962133916683182, \"ticketPrice\" : 5.637376656633329, \"customerId\" : 6, \"showtimeId\" : 1, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"movieId\" : 2, \"bookingId\" : 0 }";
+                    String exampleString = "{ \"totalAmount\" : 5.637376656633329, \"movie\" : { \"duration\" : 6, \"cast\" : \"cast\", \"releaseDate\" : \"2000-01-23T04:56:07.000+00:00\", \"director\" : \"director\", \"genre\" : \"genre\", \"description\" : \"description\", \"movieId\" : 0, \"title\" : \"title\" }, \"ticketPrice\" : 2.3021358869347655, \"showtime\" : { \"theaterId\" : 1, \"price\" : 5.962133916683182, \"showtimeId\" : 0, \"movieId\" : 6, \"startTime\" : \"2000-01-23T04:56:07.000+00:00\", \"endTime\" : \"2000-01-23T04:56:07.000+00:00\" }, \"theater\" : { \"theaterId\" : 1, \"name\" : \"name\", \"capacity\" : 5 }, \"bookingDate\" : \"2000-01-23T04:56:07.000+00:00\", \"bookingId\" : 0, \"customer\" : { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 6, \"name\" : \"name\", \"avatar\" : \"avatar\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

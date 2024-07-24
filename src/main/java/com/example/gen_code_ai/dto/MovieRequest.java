@@ -1,29 +1,22 @@
 package com.example.gen_code_ai.dto;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import java.time.OffsetDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.OffsetDateTime;
+import java.util.Objects;
 
 /**
  * MovieRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-19T00:56:02.813115+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-23T11:54:56.445739+07:00[Asia/Ho_Chi_Minh]")
 public class MovieRequest {
 
-  private Integer movieId;
+  private Long movieId;
 
   private String title;
 
@@ -40,7 +33,7 @@ public class MovieRequest {
 
   private String cast;
 
-  public MovieRequest movieId(Integer movieId) {
+  public MovieRequest movieId(Long movieId) {
     this.movieId = movieId;
     return this;
   }
@@ -52,11 +45,11 @@ public class MovieRequest {
   
   @Schema(name = "movieId", description = "Unique identifier for the movie", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("movieId")
-  public Integer getMovieId() {
+  public Long getMovieId() {
     return movieId;
   }
 
-  public void setMovieId(Integer movieId) {
+  public void setMovieId(Long movieId) {
     this.movieId = movieId;
   }
 

@@ -1,24 +1,31 @@
 package com.example.gen_code_ai.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Showtimes")
-public class ShowtimeEntity {
+@Table(name = "showtimes")
+public class Showtime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "showtime_id")
-    private Integer showtimeId;
+    private Long showtimeId;
 
     @ManyToOne
     @JoinColumn(name = "movie_id")
-    private MovieEntity movie;
+    private Movie movie;
 
     @ManyToOne
     @JoinColumn(name = "theater_id")
-    private TheatersEntity theater;
+    private Theater theater;
 
     @Column(name = "start_time")
     private LocalDateTime startTime;
@@ -29,27 +36,27 @@ public class ShowtimeEntity {
     @Column(name = "price")
     private Double price;
 
-    public Integer getShowtimeId() {
+    public Long getShowtimeId() {
         return showtimeId;
     }
 
-    public void setShowtimeId(Integer showtimeId) {
+    public void setShowtimeId(Long showtimeId) {
         this.showtimeId = showtimeId;
     }
 
-    public MovieEntity getMovie() {
+    public Movie getMovie() {
         return movie;
     }
 
-    public void setMovie(MovieEntity movie) {
+    public void setMovie(Movie movie) {
         this.movie = movie;
     }
 
-    public TheatersEntity getTheater() {
+    public Theater getTheater() {
         return theater;
     }
 
-    public void setTheater(TheatersEntity theater) {
+    public void setTheater(Theater theater) {
         this.theater = theater;
     }
 

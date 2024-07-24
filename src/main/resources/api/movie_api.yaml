@@ -78,6 +78,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
           description: OK
@@ -98,6 +99,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '204':
           description: No Content
@@ -174,6 +176,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
           description: OK
@@ -194,6 +197,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '204':
           description: No Content
@@ -273,6 +277,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
           description: OK
@@ -293,6 +298,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '204':
           description: No Content
@@ -372,6 +378,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
           description: OK
@@ -392,6 +399,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '204':
           description: No Content
@@ -467,6 +475,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
           description: OK
@@ -487,6 +496,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '204':
           description: No Content
@@ -536,6 +546,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
           description: OK
@@ -582,6 +593,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '204':
           description: No Content
@@ -658,6 +670,7 @@ components:
       properties:
         movieId:
           type: integer
+          format: int64
           description: Unique identifier for the movie
         title:
           type: string
@@ -687,6 +700,7 @@ components:
       properties:
         movieId:
           type: integer
+          format: int64
           description: Unique identifier for the movie
         title:
           type: string
@@ -717,12 +731,15 @@ components:
       properties:
         showtimeId:
           type: integer
+          format: int64
           description: Unique identifier for the showtime
         movieId:
           type: integer
+          format: int64
           description: ID of the movie being shown
         theaterId:
           type: integer
+          format: int64
           description: ID of the theater where the showtime is taking place
         startTime:
           type: string
@@ -741,12 +758,15 @@ components:
       properties:
         showtimeId:
           type: integer
+          format: int64
           description: Unique identifier for the showtime
         movieId:
           type: integer
+          format: int64
           description: ID of the movie being shown
         theaterId:
           type: integer
+          format: int64
           description: ID of the theater where the showtime is taking place
         startTime:
           type: string
@@ -763,40 +783,50 @@ components:
 
     BookingRequest:
       type: object
+      required:
+        - customerId
+        - showtimeId
+        - seatIds
+        - theaterId
       properties:
         bookingId:
           type: integer
+          format: int64
+          nullable: true
           description: Unique identifier for the booking
         customerId:
           type: integer
+          format: int64
           description: ID of the customer who made the booking
         showtimeId:
           type: integer
+          format: int64
           description: ID of the showtime associated with the booking
-        bookingDate:
-          type: string
-          format: date-time
-          description: Date and time the booking was made
-        totalAmount:
-          type: number
-          format: double
-          description: Total amount paid for the booking
-        ticketPrice:
-          type: number
-          format: double
-          description: Ticket price for the showtime
+        theaterId:
+          type: integer
+          format: int64
+          description: ID of the theater where the showtime is taking place
+        seatIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+            description: ID of the seat associated with the booking
     BookingResponse:
       type: object
       properties:
         bookingId:
           type: integer
+          format: int64
           description: Unique identifier for the booking
-        customerId:
-          type: integer
-          description: ID of the customer who made the booking
-        showtimeId:
-          type: integer
-          description: ID of the showtime associated with the booking
+        customer:
+          $ref: '#/components/schemas/CustomerResponse'
+        showtime:
+          $ref: '#/components/schemas/ShowtimeResponse'
+        theater:
+          $ref: '#/components/schemas/TheaterResponse'
+        movie:
+          $ref: '#/components/schemas/MovieResponse'
         bookingDate:
           type: string
           format: date-time
@@ -809,15 +839,73 @@ components:
           type: number
           format: double
           description: Ticket price for the showtime
-        movieId:
+
+    SeatResponse:
+      type: object
+      properties:
+        seatId:
           type: integer
-          description: ID of the movie being shown
+          format: int64
+          description: Unique identifier for the seat
+        row_num:
+          type: string
+          description: Row of the seat
+        seat_number:
+          type: integer
+          description: Seat number of the seat
+
+    TheaterResponse:
+      type: object
+      properties:
+        theaterId:
+          type: integer
+          format: int64
+          description: Unique identifier for the theater
+        name:
+          type: string
+          description: Name of the theater
+        capacity:
+          type: integer
+          description: Capacity of the theater
+
+    BookingDetailResponse:
+      type: object
+      properties:
+        bookingId:
+          type: integer
+          format: int64
+          description: Unique identifier for the booking
+        customer:
+          $ref: '#/components/schemas/CustomerResponse'
+        showtime:
+          $ref: '#/components/schemas/ShowtimeResponse'
+        theater:
+          $ref: '#/components/schemas/TheaterResponse'
+        movie:
+          $ref: '#/components/schemas/MovieResponse'
+        seats:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeatResponse'
+        bookingDate:
+          type: string
+          format: date-time
+          description: Date and time the booking was made
+        totalAmount:
+          type: number
+          format: double
+          description: Total amount paid for the booking
+        ticketPrice:
+          type: number
+          format: double
+          description: Ticket price for the showtime
 
     CustomerRequest:
       type: object
       properties:
         customerId:
           type: integer
+          format: int64
           description: Unique identifier for the customer
         name:
           type: string
@@ -847,6 +935,7 @@ components:
       properties:
         customerId:
           type: integer
+          format: int64
           description: Unique identifier for the customer
         name:
           type: string
@@ -877,6 +966,7 @@ components:
       properties:
         employeeId:
           type: integer
+          format: int64
           description: Unique identifier for the employee
         name:
           type: string
@@ -900,6 +990,7 @@ components:
       properties:
         employeeId:
           type: integer
+          format: int64
           description: Unique identifier for the employee
         name:
           type: string
@@ -924,6 +1015,7 @@ components:
       properties:
         promotionId:
           type: integer
+          format: int64
           description: Unique identifier for the promotion
           example: 1
         name:
@@ -961,6 +1053,7 @@ components:
       properties:
         movieId:
           type: integer
+          format: int64
           description: Unique identifier for the movie
         movieTitle:
           type: string
@@ -968,6 +1061,7 @@ components:
         attendanceCount:
           type: number
           description: Total attendance for the movie
+
   responses:
     MovieNotFound:
       description: The specified movie was not found

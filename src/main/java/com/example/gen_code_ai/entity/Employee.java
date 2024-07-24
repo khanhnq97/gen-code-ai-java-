@@ -17,16 +17,21 @@ Bạn có thể cần thêm các annotations khác hoặc điều chỉnh class 
 
 package com.example.gen_code_ai.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "employees")
-public class EmployeeEntity {
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employee_id")
-    private Integer employeeId;
+    private Long employeeId;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
@@ -43,11 +48,11 @@ public class EmployeeEntity {
     @Column(name = "password", length = 255)
     private String password;
 
-    public Integer getId() {
+    public Long getId() {
         return employeeId;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.employeeId = id;
     }
 
@@ -93,14 +98,7 @@ public class EmployeeEntity {
 
     @Override
     public String toString() {
-        return "EmployeeEntity{" +
-                "employeeId='" + employeeId + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", position='" + position + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return "EmployeeEntity{" + "employeeId='" + employeeId + '\'' + ", name='" + name + '\'' + ", email='" + email + '\'' + ", phone='" + phone + '\'' + ", position='" + position + '\'' + ", password='" + password + '\'' + '}';
     }
 }
 

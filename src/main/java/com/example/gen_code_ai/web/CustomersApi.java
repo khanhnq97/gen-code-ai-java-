@@ -10,33 +10,30 @@ import com.example.gen_code_ai.dto.CustomerResponse;
 import com.example.gen_code_ai.dto.UpdateCustomer404Response;
 import com.example.gen_code_ai.dto.UpdateCustomer409Response;
 import com.example.gen_code_ai.dto.UpdateMovie500Response;
-import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-19T00:56:02.813115+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-23T11:54:56.445739+07:00[Asia/Ho_Chi_Minh]")
 @Validated
 @Tag(name = "Customers", description = "the Customers API")
 public interface CustomersApi {
@@ -73,7 +70,7 @@ public interface CustomersApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 0, \"name\" : \"name\", \"avatar\" : \"avatar\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
+                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 6, \"name\" : \"name\", \"avatar\" : \"avatar\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -112,7 +109,7 @@ public interface CustomersApi {
         produces = { "application/json" }
     )
     default ResponseEntity<Void> deleteCustomer(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
+        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id
     ) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -145,12 +142,12 @@ public interface CustomersApi {
         produces = { "application/json" }
     )
     default ResponseEntity<CustomerResponse> getCustomerById(
-        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Integer id
+        @Parameter(name = "id", description = "", required = true, in = ParameterIn.PATH) @PathVariable("id") Long id
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 0, \"name\" : \"name\", \"avatar\" : \"avatar\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
+                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 6, \"name\" : \"name\", \"avatar\" : \"avatar\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -187,7 +184,7 @@ public interface CustomersApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 0, \"name\" : \"name\", \"avatar\" : \"avatar\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }, { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 0, \"name\" : \"name\", \"avatar\" : \"avatar\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" } ]";
+                    String exampleString = "[ { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 6, \"name\" : \"name\", \"avatar\" : \"avatar\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }, { \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 6, \"name\" : \"name\", \"avatar\" : \"avatar\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" } ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -238,7 +235,7 @@ public interface CustomersApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 0, \"name\" : \"name\", \"avatar\" : \"avatar\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
+                    String exampleString = "{ \"password\" : \"password\", \"phone\" : \"phone\", \"customerId\" : 6, \"name\" : \"name\", \"avatar\" : \"avatar\", \"membershipStatus\" : \"Basic\", \"email\" : \"email\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

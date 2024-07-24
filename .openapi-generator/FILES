@@ -1,4 +1,5 @@
 README.md
+src/main/java/com/example/gen_code_ai/dto/BookingDetailResponse.java
 src/main/java/com/example/gen_code_ai/dto/BookingRequest.java
 src/main/java/com/example/gen_code_ai/dto/BookingResponse.java
 src/main/java/com/example/gen_code_ai/dto/CustomerRequest.java
@@ -11,8 +12,10 @@ src/main/java/com/example/gen_code_ai/dto/PopularMovie.java
 src/main/java/com/example/gen_code_ai/dto/Promotion.java
 src/main/java/com/example/gen_code_ai/dto/ReportsAttendanceGet200Response.java
 src/main/java/com/example/gen_code_ai/dto/ReportsRevenueGet200Response.java
+src/main/java/com/example/gen_code_ai/dto/SeatResponse.java
 src/main/java/com/example/gen_code_ai/dto/ShowtimeRequest.java
 src/main/java/com/example/gen_code_ai/dto/ShowtimeResponse.java
+src/main/java/com/example/gen_code_ai/dto/TheaterResponse.java
 src/main/java/com/example/gen_code_ai/dto/UpdateBooking404Response.java
 src/main/java/com/example/gen_code_ai/dto/UpdateBooking409Response.java
 src/main/java/com/example/gen_code_ai/dto/UpdateBooking422Response.java

@@ -1,33 +1,30 @@
 package com.example.gen_code_ai.dto;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import java.time.OffsetDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.OffsetDateTime;
+import java.util.Objects;
 
 /**
  * BookingResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-19T00:56:02.813115+07:00[Asia/Ho_Chi_Minh]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-23T11:54:56.445739+07:00[Asia/Ho_Chi_Minh]")
 public class BookingResponse {
 
-  private Integer bookingId;
+  private Long bookingId;
 
-  private Integer customerId;
+  private CustomerResponse customer;
 
-  private Integer showtimeId;
+  private ShowtimeResponse showtime;
+
+  private TheaterResponse theater;
+
+  private MovieResponse movie;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private OffsetDateTime bookingDate;
@@ -36,9 +33,7 @@ public class BookingResponse {
 
   private Double ticketPrice;
 
-  private Integer movieId;
-
-  public BookingResponse bookingId(Integer bookingId) {
+  public BookingResponse bookingId(Long bookingId) {
     this.bookingId = bookingId;
     return this;
   }
@@ -50,52 +45,92 @@ public class BookingResponse {
   
   @Schema(name = "bookingId", description = "Unique identifier for the booking", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("bookingId")
-  public Integer getBookingId() {
+  public Long getBookingId() {
     return bookingId;
   }
 
-  public void setBookingId(Integer bookingId) {
+  public void setBookingId(Long bookingId) {
     this.bookingId = bookingId;
   }
 
-  public BookingResponse customerId(Integer customerId) {
-    this.customerId = customerId;
+  public BookingResponse customer(CustomerResponse customer) {
+    this.customer = customer;
     return this;
   }
 
   /**
-   * ID of the customer who made the booking
-   * @return customerId
+   * Get customer
+   * @return customer
   */
-  
-  @Schema(name = "customerId", description = "ID of the customer who made the booking", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("customerId")
-  public Integer getCustomerId() {
-    return customerId;
+  @Valid 
+  @Schema(name = "customer", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("customer")
+  public CustomerResponse getCustomer() {
+    return customer;
   }
 
-  public void setCustomerId(Integer customerId) {
-    this.customerId = customerId;
+  public void setCustomer(CustomerResponse customer) {
+    this.customer = customer;
   }
 
-  public BookingResponse showtimeId(Integer showtimeId) {
-    this.showtimeId = showtimeId;
+  public BookingResponse showtime(ShowtimeResponse showtime) {
+    this.showtime = showtime;
     return this;
   }
 
   /**
-   * ID of the showtime associated with the booking
-   * @return showtimeId
+   * Get showtime
+   * @return showtime
   */
-  
-  @Schema(name = "showtimeId", description = "ID of the showtime associated with the booking", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("showtimeId")
-  public Integer getShowtimeId() {
-    return showtimeId;
+  @Valid 
+  @Schema(name = "showtime", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("showtime")
+  public ShowtimeResponse getShowtime() {
+    return showtime;
   }
 
-  public void setShowtimeId(Integer showtimeId) {
-    this.showtimeId = showtimeId;
+  public void setShowtime(ShowtimeResponse showtime) {
+    this.showtime = showtime;
+  }
+
+  public BookingResponse theater(TheaterResponse theater) {
+    this.theater = theater;
+    return this;
+  }
+
+  /**
+   * Get theater
+   * @return theater
+  */
+  @Valid 
+  @Schema(name = "theater", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("theater")
+  public TheaterResponse getTheater() {
+    return theater;
+  }
+
+  public void setTheater(TheaterResponse theater) {
+    this.theater = theater;
+  }
+
+  public BookingResponse movie(MovieResponse movie) {
+    this.movie = movie;
+    return this;
+  }
+
+  /**
+   * Get movie
+   * @return movie
+  */
+  @Valid 
+  @Schema(name = "movie", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("movie")
+  public MovieResponse getMovie() {
+    return movie;
+  }
+
+  public void setMovie(MovieResponse movie) {
+    this.movie = movie;
   }
 
   public BookingResponse bookingDate(OffsetDateTime bookingDate) {
@@ -158,26 +193,6 @@ public class BookingResponse {
     this.ticketPrice = ticketPrice;
   }
 
-  public BookingResponse movieId(Integer movieId) {
-    this.movieId = movieId;
-    return this;
-  }
-
-  /**
-   * ID of the movie being shown
-   * @return movieId
-  */
-  
-  @Schema(name = "movieId", description = "ID of the movie being shown", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("movieId")
-  public Integer getMovieId() {
-    return movieId;
-  }
-
-  public void setMovieId(Integer movieId) {
-    this.movieId = movieId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -188,17 +203,18 @@ public class BookingResponse {
     }
     BookingResponse bookingResponse = (BookingResponse) o;
     return Objects.equals(this.bookingId, bookingResponse.bookingId) &&
-        Objects.equals(this.customerId, bookingResponse.customerId) &&
-        Objects.equals(this.showtimeId, bookingResponse.showtimeId) &&
+        Objects.equals(this.customer, bookingResponse.customer) &&
+        Objects.equals(this.showtime, bookingResponse.showtime) &&
+        Objects.equals(this.theater, bookingResponse.theater) &&
+        Objects.equals(this.movie, bookingResponse.movie) &&
         Objects.equals(this.bookingDate, bookingResponse.bookingDate) &&
         Objects.equals(this.totalAmount, bookingResponse.totalAmount) &&
-        Objects.equals(this.ticketPrice, bookingResponse.ticketPrice) &&
-        Objects.equals(this.movieId, bookingResponse.movieId);
+        Objects.equals(this.ticketPrice, bookingResponse.ticketPrice);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(bookingId, customerId, showtimeId, bookingDate, totalAmount, ticketPrice, movieId);
+    return Objects.hash(bookingId, customer, showtime, theater, movie, bookingDate, totalAmount, ticketPrice);
   }
 
   @Override
@@ -206,12 +222,13 @@ public class BookingResponse {
     StringBuilder sb = new StringBuilder();
     sb.append("class BookingResponse {\n");
     sb.append("    bookingId: ").append(toIndentedString(bookingId)).append("\n");
-    sb.append("    customerId: ").append(toIndentedString(customerId)).append("\n");
-    sb.append("    showtimeId: ").append(toIndentedString(showtimeId)).append("\n");
+    sb.append("    customer: ").append(toIndentedString(customer)).append("\n");
+    sb.append("    showtime: ").append(toIndentedString(showtime)).append("\n");
+    sb.append("    theater: ").append(toIndentedString(theater)).append("\n");
+    sb.append("    movie: ").append(toIndentedString(movie)).append("\n");
     sb.append("    bookingDate: ").append(toIndentedString(bookingDate)).append("\n");
     sb.append("    totalAmount: ").append(toIndentedString(totalAmount)).append("\n");
     sb.append("    ticketPrice: ").append(toIndentedString(ticketPrice)).append("\n");
-    sb.append("    movieId: ").append(toIndentedString(movieId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
